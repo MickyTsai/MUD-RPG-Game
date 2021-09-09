@@ -18,32 +18,72 @@ public class Weapon extends Item {
     public Weapon() {
     }
 
+    public void equiqpSword() {
+        this.ability.addStr(2);
+        this.ability.setCon(10);
+    }
+
+    public void equipAxe() {
+        this.ability.addStr(4);
+        this.ability.setCon(15);
+    }
+
+    public void equipWand() {
+        this.ability.addStr(-2);
+        this.ability.setCon(7);
+    }
+
+    public void equipBow() {
+        this.ability.addStr(3);
+        this.ability.setCon(9);
+    }
+
+    public void takeOffSword() {
+        this.ability.addStr(-2);
+        this.ability.setCon(-10);
+    }
+
+    public void takeOffAxe() {
+        this.ability.addStr(-4);
+        this.ability.setCon(-15);
+    }
+
+    public void takeOffWand() {
+        this.ability.addStr(2);
+        this.ability.setCon(-7);
+    }
+
+    public void takeOffpBow() {
+        this.ability.addStr(-3);
+        this.ability.setCon(-9);
+    }
+
     public void sword() {
         this.setAttack(2);
         this.setWeight(10);
         this.setInitial(true);
-//        this.setName("劍");
+        this.setName("劍");
     }
 
     public void axe() {
         this.setAttack(4);
         this.setWeight(15);
         this.setInitial(true);
-//        this.setName("斧頭");
+        this.setName("斧頭");
     }
 
     public void wand() {
         this.setAttack(-2);
         this.setWeight(7);
         this.setInitial(true);
-//        this.setName("法杖");
+        this.setName("法杖");
     }
 
     public void bow() {
         this.setAttack(3);
         this.setWeight(9);
         this.setInitial(false);
-//        this.setName("弓箭");
+        this.setName("弓箭");
     }
 
     public void setAttack(int attack) {
@@ -68,5 +108,12 @@ public class Weapon extends Item {
 
     public boolean getInitial() {
         return this.initial;
+    }
+
+    @Override
+    public void printItem() {
+        System.out.println("名稱:" + this.getName()
+                + "\t重量:" + this.getWeight()
+                + "\t攻擊力:" + this.getAttack());
     }
 }

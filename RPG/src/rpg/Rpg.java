@@ -24,15 +24,48 @@ public class Rpg {
         System.out.print("請輸入角色名稱->");
         newPlayer.getAbility().setName(sc.next());
         System.out.println("你好" + newPlayer.getAbility().getName());
-        
-        Weapon s = new Weapon();
-        s.axe();
-        newPlayer.wearWeapon(s);
         System.out.println(newPlayer);
-    }    
-}        
-//        //選擇起始武器（調用初始武器的ArrayList)
-//        System.out.println("請選擇一個武器");
+        
+
+        //選擇起始武器（調用初始武器的ArrayList)
+        System.out.println("請選擇一個武器");
+        Weapon w = new Weapon();
+        ArrayList<Weapon> weaponList = new ArrayList<Weapon>();
+        
+        w.axe();
+        System.out.print("選擇1 ");
+        w.printItem();
+        weaponList.add(w);
+        
+        w.bow();
+        System.out.print("選擇2 ");
+        w.printItem();
+        weaponList.add(w);
+        
+        w.wand();
+        System.out.print("選擇3 ");
+        w.printItem();
+        weaponList.add(w);
+        
+        
+        int choose = sc.nextInt();
+        newPlayer.wearWeapon(weaponList.get(choose));
+        System.out.println(newPlayer);
+//        System.out.println(weaponList.get(choose));
+//        newPlayer.changeWhenWearingEquipment(weaponList.get(choose));
+//       
+
+//        for(int i = 0; i < weaponList.size(); i++){
+//            System.out.println(weaponList);
+//        }
+        
+        
+        
+        
+        
+        
+        ArrayList<Item> armorList = new ArrayList<Item>();    
+
 //        for(int i = 0; i < weaponList.size(); i++){
 //            System.out.println("名稱：" + weaponList.get(i).getName() + 
 //                        "攻擊：" + weaponList.get(i).getAttack() + 
@@ -51,19 +84,20 @@ public class Rpg {
 //                        "重量：" + armorList.get(i).getWeight()
 //            );
 //        }
-//        test
+//        
 //
 //
-//        //進入隨機地圖
-//        
-//        
-//        //進入事件
-//        
-//        
-//        
-//        //死亡或殺死一個王
-//        
-//        
-//        //過關
-    
+        //進入隨機地圖
+        
+        
+        //進入事件
+        
+        
+        
+        //死亡或殺死一個王
+        
+        
+        //過關
+    }
+}
 

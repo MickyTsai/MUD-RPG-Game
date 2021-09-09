@@ -11,19 +11,23 @@ package rpg;
  */
 public class Item {
 
+    Ability ability = new Ability();
+    Character character = new Character();
     private String name;
     private boolean useable;
     private int price;
-    private String use;
-    
+    private String useage = "";
+    private int duration;
+    private int itemUseage = 0; //道具功能編號 1.治療 2.力量增強 3.防禦增強 4.豬肉 5.動物屠殺 6.惡魔屠殺
+
     public Item() {
     }
 
-    
-    public void setUse(String use){
-        this.use = use;
+    public void setUseage(String useage, int itemUseage) {
+        this.useage = useage;
+        this.itemUseage = itemUseage;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
@@ -48,46 +52,139 @@ public class Item {
         return this.price;
     }
 
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public int getDuration() {
+        return this.duration;
+    }
+
     public void healingPotion() {
         setName("治療藥水");
         setUseable(true);
         setPrice(3);
+        setUseage("回復3點血量", 1);
     }
 
     public void powerIncreasePotion() {
         setName("力量增強藥水");
         setUseable(true);
         setPrice(2);
+        setUseage("+2力量，持續兩次攻擊，戰鬥結束後消失", 2);
+        setDuration(2);
     }
 
     public void defenceIncreasePotion() {
         setName("防禦增強藥水");
         setUseable(true);
         setPrice(2);
+        setUseage("+2防禦，持續兩次攻擊，戰鬥結束後消失", 3);
+        setDuration(2);
     }
-    
-    public void leather(){
+
+    public void leather() {
         setName("動物皮");
         setUseable(false);
         setPrice(1);
     }
-    
-    public void wolfLeg(){
+
+    public void wolfLeg() {
         setName("狼腿");
         setUseable(false);
         setPrice(1);
     }
-    
-    public void lionClaw(){
+
+    public void lionClaw() {
         setName("獅爪");
         setUseable(false);
         setPrice(1);
     }
-    
-    public void printItem(){
-        System.out.print("名稱:" + this.name + "\t價格:" + this.price);
-        if(useable){
-            System.out.println("\t用途:" + use);
+
+    public void pork() {
+        setName("豬肉");
+        setUseable(true);
+        setPrice(2);
+        setUseage("回復2點血量，-1防禦", 4);
+    }
+
+    public void amimalSlayerMark() {
+        setName("動物屠殺者徽章");
+        setUseable(true);
+        setPrice(4);
+        setUseage("與動物戰鬥時，+1攻擊力,+1命中", 5);
+    }
+
+    public void heartOfGhost() {
+        setName("幽魂之心");
+        setUseable(false);
+        setPrice(1);
+    }
+
+    public void wolfTooth() {
+        setName("狼牙");
+        setUseable(false);
+        setPrice(1);
+    }
+
+    public void glass() {
+        setName("玻璃");
+        setUseable(false);
+        setPrice(1);
+    }
+
+    public void demomSlayerMark() {
+        setName("惡魔屠殺者徽章");
+        setUseable(true);
+        setPrice(4);
+        setUseage("與魔物戰鬥時，+1攻擊力,+1命中", 6);
+    }
+
+    public void useItem(int itemNum) { //未完成
+        if (useable) {
+            switch (itemUseage) {
+                case 1:
+                    this.ability.setHp(3);
+                    break;
+                case 2:
+                    if (true) {
+                        this.ability.setStr(2);
+                    }
+                    break;
+                case 3:
+                    if (true) {
+                        this.ability.setDef(2);
+                    }
+                    break;
+                case 4:
+                    this.ability.setHp(2);
+                    this.ability.setDef(-1);
+                    break;
+                case 5:
+                    if (this.character.getKind().equals("動物")) {
+                        this.ability.setStr(1);
+                        this.ability.setHit(1);
+                    }
+                    break;
+                case 6:
+                    if (this.character.getKind().equals("魔物")) {
+                        this.ability.setStr(1);
+                        this.ability.setHit(1);
+                    }
+                    break;
+            }
+            System.out.println("使用" + this.getName() + "!");
+            return;
         }
+        System.out.println("該道具無法使用!");
+    }
+
+    public void printItem() {
+        System.out.print("名稱:" + this.name + "\t價格:" + this.price);
+        if (useable) {
+            System.out.println("\t用途:" + useage);
+            return;
+        }
+        System.out.println("無功能");
     }
 }
