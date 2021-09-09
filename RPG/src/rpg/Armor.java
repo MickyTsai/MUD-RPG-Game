@@ -62,28 +62,28 @@ public class Armor extends Item {
         this.setDefense(1);
         this.setWeight(10);
         this.setInitial(true);
-        this.setName("木甲");
+//        this.setName("木甲");
     }
 
     public void chainMail() {
         this.setDefense(2);
         this.setWeight(15);
         this.setInitial(true);
-        this.setName("鎖子甲");
+//        this.setName("鎖子甲");
     }
 
     public void plateArmor() {
         this.setDefense(4);
         this.setWeight(20);
         this.setInitial(true);
-        this.setName("板甲");
+//        this.setName("板甲");
     }
 
     public void leatherArmor() {
         this.setDefense(2);
         this.setWeight(9);
         this.setInitial(false);
-        this.setName("皮甲");
+//        this.setName("皮甲");
     }
 
     public void setDefense(int attack) {
@@ -110,10 +110,10 @@ public class Armor extends Item {
         return this.initial;
     }
 
-    @Override
-    public void printItem() {
-        System.out.println("名稱:" + this.getName()
-                + "\t重量:" + this.getWeight()
-                + "\t防禦力:" + this.getDefense());
-    }
+    
+//    public void printItem() {
+//        System.out.println("名稱:" + this.getName()
+//                + "\t重量:" + this.getWeight()
+//                + "\t防禦力:" + this.getDefense());
+//    }
 }

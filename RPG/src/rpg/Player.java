@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Player extends Character {
 
-    private ArrayList<Weapon> weaponList = new ArrayList<Weapon>();
+    private ArrayList<Item> weaponList = new ArrayList<Item>();
     private ArrayList<Item> armorList = new ArrayList<Item>();
     private ArrayList<Item> ItemssList = new ArrayList<Item>();
     private int positon;
@@ -44,35 +44,25 @@ public class Player extends Character {
         positon++; //走一步，自身位置+1
     }
 
-    public void wearWeapon(Weapon weapon) {
-        weaponList.add(weapon);
-        changeWhenWearingEquipment();
+    public void wearWeapon(Item weapon) {
+        weaponList.add(weapon);     //穿裝備(順便加上能力值)
+        getAbility().merge(weapon.ability);
     }
 
-//    public void wearArmor(Armor armor) {
-//        armorList.add(armor);
-//        changeWhenWearingEquipment();
-//    }
+    public void wearArmor(Item armor) {
+        armorList.add(armor);     //同上
+        getAbility().merge(armor.ability);
+    }
 
-//    public void use(int choose) {
-//        this.getAbility().merge(ItemssList.get(choose - 1).ability);
-//    }
+    public void use(int choose) {
+        this.getAbility().merge(ItemssList.get(choose - 1).ability);
+    }
 
-    public void changeWhenWearingEquipment() {
-        for (Weapon weapon : weaponList) {
-            getAbility().merge(weapon.ability);
-        } 
-    }    //穿武器防具時帶來的變化
-//        for (Item armor : armorList) {
-//            getAbility().merge(armor.ability);
-//        }
-//    }
-
-//    public void supply() {
-//        for (int i = 0; i < ItemssList.size(); i++) {
-//            System.out.println((i + 1) + ". " + ItemssList.get(0));
-//        }
-//    }
+    public void supply() {
+        for (int i = 0; i < ItemssList.size(); i++) {
+            System.out.println((i + 1) + ". " + ItemssList.get(0));
+        }
+    }
 
     @Override
     public String toString() {

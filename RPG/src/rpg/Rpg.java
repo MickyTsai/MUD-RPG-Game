@@ -30,7 +30,7 @@ public class Rpg {
         //選擇起始武器（調用初始武器的ArrayList)
         System.out.println("請選擇一個武器");
         Weapon w = new Weapon();
-        ArrayList<Weapon> weaponList = new ArrayList<Weapon>();
+        ArrayList<Item> weaponList = new ArrayList<Item>();
         
         w.axe();
         System.out.print("選擇1 ");
@@ -47,13 +47,11 @@ public class Rpg {
         w.printItem();
         weaponList.add(w);
         
-        
+        System.out.print("選擇->");
         int choose = sc.nextInt();
         newPlayer.wearWeapon(weaponList.get(choose));
         System.out.println(newPlayer);
-//        System.out.println(weaponList.get(choose));
-//        newPlayer.changeWhenWearingEquipment(weaponList.get(choose));
-//       
+      
 
 //        for(int i = 0; i < weaponList.size(); i++){
 //            System.out.println(weaponList);
@@ -64,7 +62,7 @@ public class Rpg {
         
         
         
-        ArrayList<Item> armorList = new ArrayList<Item>();    
+//        ArrayList<Weapon> armorList = new ArrayList<Item>();    
 
 //        for(int i = 0; i < weaponList.size(); i++){
 //            System.out.println("名稱：" + weaponList.get(i).getName() + 
