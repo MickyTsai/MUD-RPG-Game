@@ -32,68 +32,10 @@ public class Rpg {
         System.out.println("你好 " + newPlayer.getAbility().getName());
         System.out.println();
 //        System.out.println(newPlayer); 
+        newPlayer.wearWeapon(chooseWeapon()); //穿上武器
         
+        newPlayer.wearArmor(chooseArmor()); //穿上防具
 
-        //選擇起始武器（調用初始武器的ArrayList)
-        System.out.println("請選擇一個武器");
-        ArrayList<Weapon> weaponList = new ArrayList<Weapon>();
-        
-        Weapon w1 = new Weapon();
-        w1.sword();
-        System.out.print("選擇1 ");
-        w1.printItem();
-        weaponList.add(w1);
-        
-        Weapon w2 = new Weapon();
-        w2.axe();
-        System.out.print("選擇2 ");
-        w2.printItem();
-        weaponList.add(w2);
-        
-        Weapon w3 = new Weapon();
-        w3.wand();
-        System.out.print("選擇3 ");
-        w3.printItem();
-        weaponList.add(w3);
-        
-        System.out.print("選擇->");
-        int chooseW = sc.nextInt();
-        newPlayer.wearWeapon(weaponList.get(chooseW - 1));
-        System.out.println();
-//        newPlayer.printAll();
-//        System.out.println();
-        
-           
-        //選擇起始防具（調用初始防具的ArrayList)
-        System.out.println("請選擇一個防具");
-        ArrayList<Armor> armorList = new ArrayList<Armor>();   
-        
-        Armor a1 = new Armor();
-        a1.woodenArmor();
-        System.out.print("選擇1 ");
-        a1.printItem();
-        armorList.add(a1);
-        
-        Armor a2 = new Armor();
-        a2.chainMail();
-        System.out.print("選擇2 ");
-        a2.printItem();
-        armorList.add(a2);
-        
-        Armor a3 = new Armor();
-        a3.plateArmor();
-        System.out.print("選擇3 ");
-        a3.printItem();
-        armorList.add(a3);
-        
-        System.out.print("選擇->");
-        int chooseA = sc.nextInt();
-        newPlayer.wearArmor(armorList.get(chooseA - 1));
-        System.out.println();
-//        newPlayer.printAll();
-//        System.out.println();
-
-        
         
         int kindCount = 0; //過關的地圖數
         while(true){
@@ -109,11 +51,23 @@ public class Rpg {
                     System.out.println("進入地圖：深淵");
                     break;
             }
+            if(newPlayer.isDead()){
+                newPlayer.setPositon(0);//步數重算
+                newPlayer = new Player(); //角色回到選完武器的初始
+                newPlayer.ability.setName(name);
+                        
+            }
+            
             
             //地圖：森林
             while (kind == 1 && kindCount < 2 ){
                 
                 while(true){
+                    if(newPlayer.isDead()){
+                        
+                        break;
+                    }
+                    
                     System.out.println("選擇行動");
                     System.out.println("1.繼續冒險");
                     System.out.println("2.顯示角色狀態 + 顯示裝備");
@@ -154,7 +108,7 @@ public class Rpg {
                                 if(bo){
                                    System.out.println("成功使用"); 
                                 }
-                                if(bo){
+                                if(!bo){
                                    System.out.println("此道具無法使用"); 
                                 }
                             }else if(selectStr.equals("status")){
@@ -178,9 +132,7 @@ public class Rpg {
                     fight.startFight(newPlayer, boss);
                     
                     if(newPlayer.isDead()){
-                        newPlayer.setPositon(0);//步數重算
-                        newPlayer = new Player(); //角色回到選完武器的初始
-                        newPlayer.ability.setName(name);
+                        
                         break;
                     }
                     kindCount++; //沒死＝勝利 
@@ -204,9 +156,6 @@ public class Rpg {
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
                         System.out.println();
                         break;
-                    
-                        
-                        
                         
                     case 1://遇到被動怪物 要先抓出怪物
 //                        Animal animal = new Animal();
@@ -243,7 +192,7 @@ public class Rpg {
                                     if(bo){
                                         System.out.println("成功使用"); 
                                     }
-                                    if(bo){
+                                    if(!bo){
                                         System.out.println("此道具無法使用"); 
                                     }
                                 }else if(selectStr.equals("status")){
@@ -257,17 +206,12 @@ public class Rpg {
                                 
                         }  
                         if(newPlayer.isDead()){
-                            newPlayer.setPositon(0);//步數重算
-                            newPlayer = new Player(); //角色回到選完武器的初始
-                            newPlayer.ability.setName(name);
                             break;
                         }
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
                         System.out.println();
                         break;
-                    
-                        
                         
                     case 2://遇到主動怪物
                         
@@ -278,17 +222,13 @@ public class Rpg {
                         fight.startFight(newPlayer, animal2);
                         
                         if(newPlayer.isDead()){
-                            newPlayer.setPositon(0);//步數重算
-                            newPlayer = new Player(); //角色回到選完武器的初始
-                            newPlayer.ability.setName(name);
+                            
                             break;
                         }
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
                         System.out.println();
                         break;    
-                    
-                    
                     
                     
                     case 3: //遇到岔路
@@ -319,7 +259,10 @@ public class Rpg {
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
                         System.out.println();
                         break;
-                }   
+                }
+                if(newPlayer.isDead()){
+                    break;
+                }
             }
             
             
@@ -328,6 +271,11 @@ public class Rpg {
             //地圖：深淵
             while (kind == 2 && kindCount < 2 ){
                 while(true){
+                    if(newPlayer.isDead()){
+                        
+                        break;
+                    }
+                    
                     System.out.println("選擇行動");
                     System.out.println("1.繼續冒險");
                     System.out.println("2.顯示角色狀態 + 顯示裝備");
@@ -368,7 +316,7 @@ public class Rpg {
                                 if(bo){
                                    System.out.println("使用成功"); 
                                 }
-                                if(bo){
+                                if(!bo){
                                    System.out.println("此道具無法使用"); 
                                 }
                             }else if(selectStr.equals("status")){
@@ -391,9 +339,7 @@ public class Rpg {
                     fight.startFight(newPlayer, boss);
                     
                     if(newPlayer.isDead()){
-                        newPlayer.setPositon(0);//步數重算
-                        newPlayer = new Player(); //角色回到選完武器的初始
-                        newPlayer.ability.setName(name);
+                        
                         break;
                     }
                     kindCount++; //沒死＝勝利 
@@ -454,7 +400,7 @@ public class Rpg {
                                     if(bo){
                                         System.out.println("成功使用"); 
                                     }
-                                    if(bo){
+                                    if(!bo){
                                         System.out.println("此道具無法使用"); 
                                     }
                                 }else if(selectStr.equals("status")){
@@ -467,9 +413,7 @@ public class Rpg {
                                 break;    
                         }  
                         if(newPlayer.isDead()){
-                            newPlayer.setPositon(0);//步數重算
-                            newPlayer = new Player(); //角色回到選完武器的初始
-                            newPlayer.ability.setName(name);
+                            
                             break;
                         }
                         newPlayer.goOneStep();
@@ -488,9 +432,7 @@ public class Rpg {
                         fight.startFight(newPlayer, demon2);
                         
                         if(newPlayer.isDead()){
-                            newPlayer.setPositon(0);//步數重算
-                            newPlayer = new Player(); //角色回到選完武器的初始
-                            newPlayer.ability.setName(name);
+                            
                             break;
                         }
                         newPlayer.goOneStep();
@@ -529,7 +471,10 @@ public class Rpg {
                         System.out.println();
                         
                         break;
-                }   
+                }
+                if(newPlayer.isDead()){
+                    break;
+                }
             }
         
             if (kindCount == 2){
@@ -543,6 +488,62 @@ public class Rpg {
     public static int Random (int min, int max){
         return (int)(Math.random() * (max - min + 1) + min);
     }
+    public static Weapon chooseWeapon(){
+        //選擇起始武器（調用初始武器的ArrayList)
+        Scanner sc = new Scanner(System.in);
+        System.out.println("請選擇一個武器");
+        ArrayList<Weapon> weaponList = new ArrayList<Weapon>();
+        Weapon w1 = new Weapon();
+        w1.sword();
+        System.out.print("選擇1 ");
+        w1.printItem();
+        weaponList.add(w1);
+        
+        Weapon w2 = new Weapon();
+        w2.axe();
+        System.out.print("選擇2 ");
+        w2.printItem();
+        weaponList.add(w2);
+        
+        Weapon w3 = new Weapon();
+        w3.wand();
+        System.out.print("選擇3 ");
+        w3.printItem();
+        weaponList.add(w3);
+        
+        System.out.print("選擇->");
+        int chooseW = sc.nextInt();
+        return weaponList.get(chooseW - 1);
+
+    } //選擇武器
+    public static Armor chooseArmor(){
+        //選擇起始防具（調用初始防具的ArrayList)
+        Scanner sc = new Scanner(System.in);
+        System.out.println("請選擇一個防具");
+        ArrayList<Armor> armorList = new ArrayList<Armor>();   
+        
+        Armor a1 = new Armor();
+        a1.woodenArmor();
+        System.out.print("選擇1 ");
+        a1.printItem();
+        armorList.add(a1);
+        
+        Armor a2 = new Armor();
+        a2.chainMail();
+        System.out.print("選擇2 ");
+        a2.printItem();
+        armorList.add(a2);
+        
+        Armor a3 = new Armor();
+        a3.plateArmor();
+        System.out.print("選擇3 ");
+        a3.printItem();
+        armorList.add(a3);
+        
+        System.out.print("選擇->");
+        int chooseA = sc.nextInt();
+        return armorList.get(chooseA - 1);
+    } //選擇防具
     
 }
     
