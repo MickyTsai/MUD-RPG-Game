@@ -1,4 +1,5 @@
 package rpg;
+
 public class Armor extends Item {
 
     private boolean initial;

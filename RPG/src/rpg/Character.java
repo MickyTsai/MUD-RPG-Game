@@ -1,7 +1,8 @@
 package rpg;
+
 public class Character {
-    Ability ability;
-    private int kind;
+    protected Ability ability = new Ability();
+    private int kind;  //暫時等於地圖種類，也等於怪物種類
 
     public Ability getAbility() {
         return ability;
@@ -20,10 +21,7 @@ public class Character {
     }
 
     public boolean isDead() {
-        Boolean isDead = false;
-        if (ability.getHp() <= 0) {
-            isDead = true;
-        }
-        return true;
+        boolean isDead = ability.getHp() <= 0;
+        return isDead;
     }
 }

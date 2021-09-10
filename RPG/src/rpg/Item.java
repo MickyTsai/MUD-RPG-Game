@@ -1,43 +1,49 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package rpg;
 
-/**
- *
- * @author wewe23370030
- */
 public class Item {
 
-    Ability ability = new Ability();
-    Character character = new Character();
-    private String name;
+    protected Ability ability = new Ability();
+    private int buffTime;
     private boolean useable;
     private int price;
     private String useage = "";
-    private int duration;
-    private int itemUseage = 0; //道具功能編號 1.治療 2.力量增強 3.防禦增強 4.豬肉 5.動物屠殺 6.惡魔屠殺
+    private boolean isPermanentBuff;
+    private int againstAnimalOrDemon = 0;
 
-    public Item() {
+    public int getAgainstAnimalOrDemon() {
+        return againstAnimalOrDemon;
     }
 
-    public int getItemUseage(){
-        return itemUseage;
+    public void setAgainstAnimalOrDemon(int againstAnimalOrDemon) {
+        this.againstAnimalOrDemon = againstAnimalOrDemon;
     }
-    
-    public void setUseage(String useage, int itemUseage) {
+
+    public boolean isPermanentBuff() {
+        return isPermanentBuff;
+    }
+
+    public void setPermanentBuff(boolean permanentBuff) {
+        isPermanentBuff = permanentBuff;
+    }
+
+    public int getBuffTime() {
+        return buffTime;
+    }
+
+    public void setUseage(String useage) {
         this.useage = useage;
-        this.itemUseage = itemUseage;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setBuffTime(int buffTime) {
+        this.buffTime = buffTime;
     }
 
-    public String getName() {
-        return this.name;
+    public void reduceBuffTime() {
+        buffTime--;
+    }
+
+    public void setAbility(Ability ability) {
+        this.ability = ability;
     }
 
     public void setUseable(boolean initial) {
@@ -56,98 +62,103 @@ public class Item {
         return this.price;
     }
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public int getDuration() {
-        return this.duration;
-    }
-
     public void healingPotion() {
-        setName("治療藥水");
+        ability.setName("治療藥水");
         setUseable(true);
+        ability.setHp(3);
         setPrice(3);
-        setUseage("回復3點血量", 1);
+        setUseage("回復3點血量");
     }
 
     public void powerIncreasePotion() {
-        setName("力量增強藥水");
-        setUseable(true);
+        ability.setName("力量增強藥水");
+        ability.setStr(2);
+        setUseable(false);
         setPrice(2);
-        setUseage("+2力量，持續兩次攻擊，戰鬥結束後消失", 2);
-        setDuration(2);
+        setUseage("+2力量，持續兩次攻擊，戰鬥結束後消失");
+        setBuffTime(2);
     }
 
     public void defenceIncreasePotion() {
-        setName("防禦增強藥水");
-        setUseable(true);
+        ability.setName("防禦增強藥水");
+        ability.setDef(2);
+        setUseable(false);
         setPrice(2);
-        setUseage("+2防禦，持續兩次攻擊，戰鬥結束後消失", 3);
-        setDuration(2);
+        setUseage("+2防禦，持續兩次攻擊，戰鬥結束後消失");
+        setBuffTime(2);
     }
 
     public void leather() {
-        setName("動物皮");
+        ability.setName("動物皮");
         setUseable(false);
         setPrice(1);
     }
 
     public void wolfLeg() {
-        setName("狼腿");
+        ability.setName("狼腿");
         setUseable(false);
         setPrice(1);
     }
 
     public void lionClaw() {
-        setName("獅爪");
+        ability.setName("獅爪");
         setUseable(false);
         setPrice(1);
     }
 
     public void pork() {
-        setName("豬肉");
+        ability.setName("豬肉");
+        ability.setHp(2);
+        ability.setDef(-1);
         setUseable(true);
         setPrice(2);
-        setUseage("回復2點血量，-1防禦", 4);
+        setUseage("回復2點血量，-1防禦");
     }
 
     public void amimalSlayerMark() {
-        setName("動物屠殺者徽章");
+        ability.setName("動物屠殺者徽章");
+        ability.setHit(1);
+        ability.setStr(1);
         setUseable(true);
         setPrice(4);
-        setUseage("與動物戰鬥時，+1攻擊力,+1命中", 5);
+        setBuffTime(99);
+        setUseage("與動物戰鬥時，+1攻擊力,+1命中");
+        setPermanentBuff(true);
+        setAgainstAnimalOrDemon(1);
     }
 
     public void heartOfGhost() {
-        setName("幽魂之心");
+        ability.setName("幽魂之心");
         setUseable(false);
         setPrice(1);
     }
 
     public void wolfTooth() {
-        setName("狼牙");
+        ability.setName("狼牙");
         setUseable(false);
         setPrice(1);
     }
 
     public void glass() {
-        setName("玻璃");
+        ability.setName("玻璃");
         setUseable(false);
         setPrice(1);
     }
 
     public void demomSlayerMark() {
-        setName("惡魔屠殺者徽章");
+        ability.setName("惡魔屠殺者徽章");
+        ability.setStr(1);
+        ability.setHit(1);
         setUseable(true);
         setPrice(4);
-        setUseage("與魔物戰鬥時，+1攻擊力,+1命中", 6);
+        setBuffTime(99);
+        setUseage("與魔物戰鬥時，+1攻擊力,+1命中");
+        setPermanentBuff(true);
+        setAgainstAnimalOrDemon(2);
     }
 
-
-    
     public void printItem() {
-        System.out.print("名稱:" + this.name + "\t價格:" + this.price);
+        System.out.print("名稱:" + ability.getName() + "\t價格:" + this.price);
         if (useable) {
             System.out.println("\t用途:" + useage);
             return;
