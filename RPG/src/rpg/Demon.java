@@ -1,12 +1,13 @@
 package rpg;
+
 import java.util.ArrayList;
 
 public class Demon extends Monster {
+    private Item[] dropItem = new Item[2];  // 儲存每個怪物可能掉落的2件物品
 
     public Demon() {
         setKind(2);  // 初始化設定動物在地圖2(深淵)
-        item.heartOfGhost();  // 初始化設定掉落物為動物皮
-        itemList.add(item);  // 將動物皮加入掉落物清單
+        dropItem[0].heartOfGhost();    // 初始化設定掉落物為幽魂之心
     }
 
     public void demonWolf() {
@@ -18,11 +19,8 @@ public class Demon extends Monster {
         ability.setDex(4);
         ability.setExp(5);
         ability.setLV(1);
-        setAbility(ability);
-        if (isDead()) {
-            item.wolfTooth();
-            itemList.add(item);
-        }
+        dropItem[1].wolfTooth();
+        demonDropItemList.add(dropItem);
     }  // 設定魔狼的基本屬性&死後掉落物
 
     public void celestialHuang() {
@@ -34,11 +32,8 @@ public class Demon extends Monster {
         ability.setDex(5);
         ability.setExp(5);
         ability.setLV(1);
-        setAbility(ability);
-        if (isDead()) {
-            item.leather();
-            itemList.add(item);
-        }
+        dropItem[1].leather();
+        demonDropItemList.add(dropItem);
     }  // 設定黃大仙的基本屬性&死後掉落物
 
     public void mountainDemon() {
@@ -50,11 +45,8 @@ public class Demon extends Monster {
         ability.setDex(4);
         ability.setExp(5);
         ability.setLV(1);
-        setAbility(ability);
-        if (isDead()) {
-            item.glass();
-            itemList.add(item);
-        }
+        dropItem[1].glass();
+        demonDropItemList.add(dropItem);
     }  // 設定魑的基本屬性&死後掉落物
 
     public void bahamut() {
@@ -66,14 +58,7 @@ public class Demon extends Monster {
         ability.setDex(5);
         ability.setExp(10);
         ability.setLV(2);
-        setAbility(ability);
-        if (isDead()) {
-            item.demomSlayerMark();
-            itemList.add(item);
-        }
+        dropItem[1].demomSlayerMark();
+        demonDropItemList.add(dropItem);
     }  // 設定巴哈姆特的基本屬性&死後掉落物
-
-    public Item getDropItem() {
-        return null;
-    }
 }

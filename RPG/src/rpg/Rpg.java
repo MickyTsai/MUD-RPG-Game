@@ -18,6 +18,23 @@ public class Rpg {
      */
     public static void main(String[] args)throws InterruptedException {
         Scanner sc = new Scanner(System.in);
+        Fight fight = new Fight();
+        
+        //森林怪物清單
+//        Monster monster = new Monster();
+//        monster.getAnimals();
+        //森林怪物清單
+//        ArrayList<Animal> forest = new ArrayList<Animal>();
+//        Animal animal1 = new Animal();
+//        animal1.wolf();
+//        forest.add(animal1);
+//        Animal animal2 = new Animal();
+//        animal2.lion();
+//        forest.add(animal2);
+//        Animal animal3 = new Animal();
+//        animal3.boar();
+//        forest.add(animal3);
+
         //角色命名
         Player newPlayer = new Player();
         Player player = new Player();
@@ -90,11 +107,11 @@ public class Rpg {
 //        System.out.println(Random(1, 2));
         
         player = newPlayer;//將角色選完武器的狀態先暫存
-        int kindCount = 0;
+        int kindCount = 0; //過關的地圖數
         while(true){
-            
+            //地圖選擇（隨機）
             int kind = Random(1, 3);
-            kind = 1;
+            kind = 2;// 測試用
                     
             switch (kind){
                 case 1:
@@ -109,22 +126,28 @@ public class Rpg {
             //地圖：森林
             while (kind == 1 && kindCount < 2 ){
                 
+                //Boss戰
                 if (newPlayer.getPositon() == 5){
-                    //Boss戰
                     System.out.println("遇到Boss !");
-                    
-                    
-                    
-                    
+                    Animal boss = new Animal();
+                    boss.elephant();
+                    System.out.println("Boss是" + boss.ability.getName() + "!" );
+                    fight.startFight(newPlayer, boss);
                     
                     if(newPlayer.isDead()){
-                        kindCount = 0; //步數重算
+                        newPlayer.setPositon(0);//步數重算
                         newPlayer = player; //角色回到選完武器的初始
                         break;
                     }
+                    kindCount++; //沒死＝勝利 
+                    kind = 2; //切換到另一張地圖
+                    newPlayer.setPositon(0);//步數重算
+                    break;
                 }
+                
                 //事件
-                int event =  sc.nextInt();
+                int event = Random(0, 5);
+                event = sc.nextInt();// 測試用
                 switch (event){
                     case 0://沒事發生 
                         System.out.println("沒事發生，繼續走 ");
@@ -136,116 +159,82 @@ public class Rpg {
                         
                         
                     case 1://遇到被動怪物 要先抓出怪物
-                        ArrayList<Animal> forest = new ArrayList<Animal>();
-                        Animal animal1 = new Animal();
-                        animal1.wolf();
-                        forest.add(animal1);
-                        Animal animal2 = new Animal();
-                        animal2.lion();
-                        forest.add(animal2);
-                        Animal animal3 = new Animal();
-                        animal3.boar();
-                        forest.add(animal3);
-                        
                         Animal animal = new Animal();
-                        animal = forest.get(Random(0, 3));
+                        animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
                         
                         System.out.println("遇到" + animal.ability.getName() + "要逃跑嗎？ ");
                         System.out.println("選擇1：逃跑\n " + "選擇2：戰鬥 "); 
-                        
                         int choose = sc.nextInt();       
                         switch (choose){
                             case 1:
                                 System.out.println("你選擇逃跑");
-                                Fight fight = new Fight();
                                 if(fight.isEscaping(newPlayer, animal)){
                                     System.out.println("逃跑成功");
                                 }else{
                                     System.out.println("逃跑失敗 開始戰鬥");
                                     fight.startFight(newPlayer, animal);
-                                }    
+                                }
+                                break;
                             case 2:
-                                System.out.println("你選擇戰鬥");
-                                Fight fight2 = new Fight();
-                                fight2.startFight(newPlayer, animal);
+                                System.out.println("你選擇戰鬥"); 
+                                fight.startFight(newPlayer, animal);
+                                break;
                         }  
                         if(newPlayer.isDead()){
-                            kindCount = 0; //步數重算
+                            newPlayer.setPositon(0);//步數重算
                             newPlayer = player; //角色回到選完武器的初始
                             break;
                         }
                         newPlayer.goOneStep();
+                        System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
                         break;
                     
                         
                         
                     case 2://遇到主動怪物
                         System.out.println("遇到主動怪物，不能逃跑！ ");
-                        
-                        //只能戰鬥
-                        newPlayer.setFighting(true);//角色進入戰鬥狀態
-                        
-                        //從深淵怪物ArrayList中隨機取一個怪物
-//                        Moster moster2 = new Moster();
-//                        moster2 = MosterList.get(Random());
-//                        //戰鬥
-//                        fight2.startFight(newPlayer, monster2);
+                        animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
+                        System.out.println("戰鬥開始"); 
+                        fight.startFight(newPlayer, animal);
                         
                         if(newPlayer.isDead()){
-                            kindCount = 0; //步數重算
+                            newPlayer.setPositon(0);//步數重算
                             newPlayer = player; //角色回到選完武器的初始
                             break;
-                        }    
+                        }
                         newPlayer.goOneStep();
+                        System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        break;    
                     
                     
                     
                     
-                    
-                    case 3://遇到岔路
+                    case 3: //遇到岔路
                         System.out.println("遇到岔路 ");
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
                         break;
                     
                     case 4://遇到寶箱
-
+                        ArrayList<Item> treasureList1 = new ArrayList<Item>();
                         Item healingPotion = new Item();
                         healingPotion.healingPotion();
+                        treasureList1.add(healingPotion);
                         
-                        switch(kind){
-                            case 1:
-                                ArrayList<Item> treasureList1 = new ArrayList<Item>();
-                                treasureList1.add(healingPotion);
-                                Item powerIncreasePotion = new Item();
-                                powerIncreasePotion.powerIncreasePotion();
-                                treasureList1.add(powerIncreasePotion);
-                                Weapon bow = new Weapon();
-                                bow.bow();
-                                treasureList1.add(bow);
-                                newPlayer.getItem(treasureList1.get(Random(0, 3)));
-                                break;
-                            case 2:
-                                ArrayList<Item> treasureList2 = new ArrayList<Item>();
-                                Armor leatherArmor = new Armor();
-                                leatherArmor.leatherArmor();
-                                treasureList2.add(leatherArmor);
-                                Item defenseIncreasePotion = new Item();
-                                defenseIncreasePotion.powerIncreasePotion();
-                                treasureList2.add(defenseIncreasePotion);
-                                treasureList2.add(healingPotion);
-                                newPlayer.getItem(treasureList2.get(Random(0, 3)));
-                                break;
-                        }
+                        Item powerIncreasePotion = new Item();
+                        powerIncreasePotion.powerIncreasePotion();
+                        treasureList1.add(powerIncreasePotion);
+                        
+                        Weapon bow = new Weapon();
+                        bow.bow();
+                        treasureList1.add(bow);
+                        
+                        newPlayer.getItem(treasureList1.get(Random(0, 3)));
+                        
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
                         break;
-                }
-                if(false){//人物死亡
-                        kindCount = 0; //步數重算
-                        newPlayer = player; //角色回到選完武器的初始
-                        break;
-                }
+                }   
             }
             
             
@@ -253,7 +242,112 @@ public class Rpg {
             
             //地圖：深淵
             while (kind == 2 && kindCount < 2 ){
+                //Boss戰
+                if (newPlayer.getPositon() == 5){
+                    System.out.println("遇到Boss !");
+                    Demon boss = new Demon();
+                    boss.bahamut();
+                    System.out.println("Boss是" + boss.ability.getName() + "!" );
+                    fight.startFight(newPlayer, boss);
+                    
+                    if(newPlayer.isDead()){
+                        newPlayer.setPositon(0);//步數重算
+                        newPlayer = player; //角色回到選完武器的初始
+                        break;
+                    }
+                    kindCount++; //沒死＝勝利 
+                    kind = 2; //切換到另一張地圖
+                    newPlayer.setPositon(0);//步數重算
+                    break;
+                }
                 
+                //事件
+                int event = Random(0, 5);
+                event = sc.nextInt();// 測試用
+                switch (event){
+                    case 0://沒事發生 
+                        System.out.println("沒事發生，繼續走 ");
+                        newPlayer.goOneStep();
+                        System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        break;
+                    
+                        
+                        
+                        
+                    case 1://遇到被動怪物 要先抓出怪物
+                        Animal animal = new Animal();
+                        animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
+                        
+                        System.out.println("遇到" + animal.ability.getName() + "要逃跑嗎？ ");
+                        System.out.println("選擇1：逃跑\n " + "選擇2：戰鬥 "); 
+                        int choose = sc.nextInt();       
+                        switch (choose){
+                            case 1:
+                                System.out.println("你選擇逃跑");
+                                if(fight.isEscaping(newPlayer, animal)){
+                                    System.out.println("逃跑成功");
+                                }else{
+                                    System.out.println("逃跑失敗 開始戰鬥");
+                                    fight.startFight(newPlayer, animal);
+                                }
+                                break;
+                            case 2:
+                                System.out.println("你選擇戰鬥"); 
+                                fight.startFight(newPlayer, animal);
+                                break;
+                        }  
+                        if(newPlayer.isDead()){
+                            newPlayer.setPositon(0);//步數重算
+                            newPlayer = player; //角色回到選完武器的初始
+                            break;
+                        }
+                        newPlayer.goOneStep();
+                        System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        break;
+                    
+                        
+                        
+                    case 2://遇到主動怪物
+                        System.out.println("遇到主動怪物，不能逃跑！ ");
+                        animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
+                        System.out.println("戰鬥開始"); 
+                        fight.startFight(newPlayer, animal);
+                        
+                        if(newPlayer.isDead()){
+                            newPlayer.setPositon(0);//步數重算
+                            newPlayer = player; //角色回到選完武器的初始
+                            break;
+                        }
+                        newPlayer.goOneStep();
+                        System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        break;    
+                    
+                    case 3: //遇到岔路
+                        System.out.println("遇到岔路 ");
+                        newPlayer.goOneStep();
+                        System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        break;
+                    
+                    case 4://遇到寶箱
+                        ArrayList<Item> treasureList2 = new ArrayList<Item>();
+                        Item healingPotion = new Item();
+                        healingPotion.healingPotion();
+                        treasureList2.add(healingPotion);
+                        
+                        Armor leatherArmor = new Armor();
+                        leatherArmor.leatherArmor();
+                        treasureList2.add(leatherArmor);
+                        
+                        Item defenseIncreasePotion = new Item();
+                        defenseIncreasePotion.powerIncreasePotion();
+                        treasureList2.add(defenseIncreasePotion);
+                        
+                        newPlayer.getItem(treasureList2.get(Random(0, 3)));
+                        
+                        newPlayer.goOneStep();
+                        System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        break;
+                }   
             }
         
             if (kindCount == 2){
