@@ -21,6 +21,7 @@ public class Animal extends Character {
         ability.setDex(6);
         ability.setExp(5);
         ability.setLV(1);
+        setAbility(ability);
         if (isDead()) {
             dropItem.wolfLeg();
             dropItemList.add(dropItem);
@@ -36,6 +37,7 @@ public class Animal extends Character {
         ability.setDex(4);
         ability.setExp(6);
         ability.setLV(1);
+        setAbility(ability);
         if (isDead()) {
             dropItem.lionClaw();
             dropItemList.add(dropItem);
@@ -51,6 +53,7 @@ public class Animal extends Character {
         ability.setDex(4);
         ability.setExp(5);
         ability.setLV(1);
+        setAbility(ability);
         if (isDead()) {
             dropItem.pork();
             dropItemList.add(dropItem);
@@ -66,6 +69,7 @@ public class Animal extends Character {
         ability.setDex(3);
         ability.setExp(10);
         ability.setLV(2);
+        setAbility(ability);
         if (isDead()) {
             dropItem.amimalSlayerMark();
             dropItemList.add(dropItem);

@@ -21,6 +21,7 @@ public class Monster extends Character {
         ability.setDex(4);
         ability.setExp(5);
         ability.setLV(1);
+        setAbility(ability);
         if (isDead()) {
             item.wolfTooth();
             itemList.add(item);
@@ -36,6 +37,7 @@ public class Monster extends Character {
         ability.setDex(5);
         ability.setExp(5);
         ability.setLV(1);
+        setAbility(ability);
         if (isDead()) {
             item.leather();
             itemList.add(item);
@@ -51,6 +53,7 @@ public class Monster extends Character {
         ability.setDex(4);
         ability.setExp(5);
         ability.setLV(1);
+        setAbility(ability);
         if (isDead()) {
             item.glass();
             itemList.add(item);
@@ -66,13 +69,10 @@ public class Monster extends Character {
         ability.setDex(5);
         ability.setExp(10);
         ability.setLV(2);
+        setAbility(ability);
         if (isDead()) {
             item.demomSlayerMark();
             itemList.add(item);
         }
     }  // 設定巴哈姆特的基本屬性&死後掉落物
-
-    public ArrayList<Item> getItem() {
-        return itemList;
-    }
 }
