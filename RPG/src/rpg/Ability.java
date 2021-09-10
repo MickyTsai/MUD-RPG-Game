@@ -3,7 +3,7 @@ package rpg;
 public class Ability {
     private int maxHp = 0;
     private int hp = 0;
-    private int str = 0;
+    private int str = 0;          ///目前攻擊力=力量 未來應該會改善
     private int def = 0;
     private int hit = 0;
     private int dex = 0;
@@ -148,6 +148,7 @@ public class Ability {
 
     public void addStr(int value) {
         str += value;
+        setCon(str * 10);
     }
 
     public void addDef(int value) {
@@ -180,12 +181,17 @@ public class Ability {
     }
 
     public void merge(Ability newAbility) {
+        maxHp += newAbility.maxHp;
         hp += newAbility.hp;
+        if (hp > maxHp) {
+            hp = maxHp;
+        }
         str += newAbility.str;
         dex += newAbility.dex;
         def += newAbility.def;
         hit += newAbility.hit;
         equipmentWeight += newAbility.equipmentWeight;
+        setCon(str * 10);
     }
 
     public void unMerge(Ability newAbility) {
@@ -195,5 +201,6 @@ public class Ability {
         def -= newAbility.def;
         hit -= newAbility.hit;
         equipmentWeight -= newAbility.equipmentWeight;
+        setCon(str * 10);
     }
 }

@@ -4,16 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="43f91d24-192c-4f04-aca5-132f5f0e870a" name="Default" comment="1.fix Animal&#10;2.修改Monster中的Animals &amp; demons&#10;3.修改怪物掉落物清單">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/MUD-RPG-Game.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MUD-RPG-Game.iml" afterDir="false" />
+    <list default="true" id="43f91d24-192c-4f04-aca5-132f5f0e870a" name="Default" comment="將Boss從一般怪物清單剔除">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RPG/src/rpg/Ability.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG/src/rpg/Ability.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RPG/src/rpg/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG/src/rpg/Animal.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RPG/src/rpg/Armor.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG/src/rpg/Armor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RPG/src/rpg/Character.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG/src/rpg/Character.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RPG/src/rpg/Demon.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG/src/rpg/Demon.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RPG/src/rpg/Fight.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG/src/rpg/Fight.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RPG/src/rpg/Item.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG/src/rpg/Item.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RPG/src/rpg/Monster.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG/src/rpg/Monster.java" afterDir="false" />
@@ -201,7 +195,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631259132635</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="將Boss從一般怪物清單剔除">
+      <created>1631269107429</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1631269107429</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TodoView">
@@ -275,7 +276,8 @@
     <MESSAGE value="新增怪物父類別Monster，修改原Monster為子類別Demon" />
     <MESSAGE value="fix 掉落物處理" />
     <MESSAGE value="1.fix Animal&#10;2.修改Monster中的Animals &amp; demons&#10;3.修改怪物掉落物清單" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.fix Animal&#10;2.修改Monster中的Animals &amp; demons&#10;3.修改怪物掉落物清單" />
+    <MESSAGE value="將Boss從一般怪物清單剔除" />
+    <option name="LAST_COMMIT_MESSAGE" value="將Boss從一般怪物清單剔除" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/RPG/src/rpg/Player.java">

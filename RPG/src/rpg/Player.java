@@ -11,7 +11,6 @@ public class Player extends Character {
     private int positon;
     private boolean isFighting = false;
 
-
     public Player() {
         Ability initialAbility = new Ability();
         initialAbility.setArmorMaxmum(1);
@@ -23,12 +22,11 @@ public class Player extends Character {
         initialAbility.setDex(5);
         initialAbility.setStr(5);
         initialAbility.setHit(5);
-        initialAbility.setCon(6 * initialAbility.getStr());
+        initialAbility.setCon(10 * initialAbility.getStr());
         initialAbility.setLV(1);
         initialAbility.setMaxExp(10);
         setAbility(initialAbility);
         positon = 0;  //起始位置在原點
-
     }
 
     public void lvelUp() {
@@ -39,9 +37,10 @@ public class Player extends Character {
             getAbility().setMaxExp(getAbility().getMaxExp() * 2);//最大經驗值變成原本兩倍
             getAbility().addStr(2);
             getAbility().addDex(2);
-            getAbility().addHp(2);   //各項素質提升
+            getAbility().addMaxHp(2);   //各項素質提升
             getAbility().addHit(2);
             getAbility().addDef(2);
+            getAbility().setHp(getAbility().getMaxHp());  //血量全滿
             System.out.println("所有素質提升");
             printState();
             lvelUp(); //判定有無可能一次升多等
@@ -52,29 +51,49 @@ public class Player extends Character {
         positon++; //走一步，自身位置+1
     }
 
-    public void wearWeapon(Weapon weapon) {
-        weaponList.add(weapon);     //穿裝備(順便加上能力值)
-        getAbility().merge(weapon.ability);
+    public boolean wearWeapon(Weapon weapon) {
+        boolean isWear = false;
+        if (weapon.ability.getEquipmentWeight() + ability.getEquipmentWeight() > ability.getCon()) {
+            System.out.println("太重了穿不了");
+        } else if (weaponList.size() >= ability.getWeaponMaxmum()) {
+            System.out.println("裝備已滿");
+        } else {
+            weaponList.add(weapon);     //穿裝備(順便加上能力值)
+            getAbility().merge(weapon.ability);
+            System.out.println("已裝上" + weapon.ability.getName());
+            isWear = true;
+        }
+        return isWear;
     }
 
     public void takeOffWeapon(int indexInList) { //脫裝
-        if (indexInList <= weaponList.size()) { //不可以選擇超出範圍的裝
-            getAbility().unMerge(weaponList.get(indexInList - 1).ability);  // (回歸原本)
+        if (indexInList <= weaponList.size() && bag.size() < ability.getItemMaxmum()) { //不可以選擇超出範圍的裝且背包還有空間
+            getAbility().unMerge(weaponList.get(indexInList - 1).ability);  // (回歸原本素質)
             bag.add(weaponList.get(indexInList - 1)); //放回背包
-            weaponList.remove(indexInList - 1);// 卸下原本在裝備欄的位置
+            weaponList.remove(indexInList - 1); // 卸下原本在裝備欄的位置
         } else {
             System.out.println("輸入錯誤");
         }
     }
 
-    public void wearArmor(Armor armor) {
-        armorList.add(armor);     //同上
-        getAbility().merge(armor.ability);
+    public boolean wearArmor(Armor armor) {
+        boolean isWear = false;
+        if (armor.ability.getEquipmentWeight() + ability.getEquipmentWeight() > ability.getCon()) {
+            System.out.println("太重了穿不了");
+        } else if (armorList.size() >= ability.getArmorMaxmum()) {
+            System.out.println("裝備已滿");
+        } else {
+            armorList.add(armor);     //穿裝備(順便加上能力值)
+            getAbility().merge(armor.ability);
+            System.out.println("已裝上" + armor.ability.getName());
+            isWear = true;
+        }
+        return isWear;
     }
 
     public void takeOffArmor(int indexInList) { //脫裝
-        if (indexInList <= armorList.size()) { //不可以選擇超出範圍的裝
-            getAbility().unMerge(armorList.get(indexInList - 1).ability);  // (回歸原本)
+        if (indexInList <= armorList.size() && bag.size() < ability.getItemMaxmum()) { //不可以選擇超出範圍的裝且背包有空間
+            getAbility().unMerge(armorList.get(indexInList - 1).ability);  // (回歸原本素質)
             bag.add(armorList.get(indexInList - 1)); //放回背包
             armorList.remove(indexInList - 1);// 卸下原本在裝備欄的位置
         } else {
@@ -83,20 +102,30 @@ public class Player extends Character {
     }
 
     public boolean use(int choose) {////使用背包東西(順便把背包裡的那個刪掉) + 回傳布林值判斷使用成功與否
-        Item item = bag.get(choose - 1);     //背包裡的那個東西
         boolean isOk = false;
-        if (item.isPermanentBuff()) { //先判斷是否為永久型buff型道具
-            buffList.add(item);
-            bag.remove(choose - 1);
-            isOk = true;
-        } else if (item.getBuffTime() > 0 && isFighting) { //判斷是否為戰鬥中使用的buff道具
-            buffList.add(item);
-            bag.remove(choose - 1);
-            isOk = true;
-        } else if (item.getUseable()) {   //其他種道具使用
-            getAbility().merge(item.ability);
-            bag.remove(item);
-            isOk = true;
+        if (choose <= bag.size()) {  //防呆
+            Item item = bag.get(choose - 1);     //背包裡的那個東西
+            if (item.isPermanentBuff()) { //先判斷是否為永久型buff型道具
+                buffList.add(item);
+                bag.remove(choose - 1);
+                isOk = true;
+            } else if (item.getBuffTime() > 0 && isFighting) { //判斷是否為戰鬥中使用的buff道具
+                buffList.add(item);
+                bag.remove(choose - 1);
+                isOk = true;
+            } else if (item.getUseable()) {   //其他種道具使用
+                getAbility().merge(item.ability);
+                bag.remove(item);
+                isOk = true;
+            } else if (item.isArmor()) {
+                takeOffArmor(1);  //目前只有一格裝備，所以暫時先1之後再改
+                wearArmor((Armor) item); //穿裝
+                bag.remove(item);
+            } else if (item.isWeapon()) {
+                takeOffWeapon(1);
+                wearWeapon((Weapon) item);
+                bag.remove(item);
+            }
         }
         return isOk;
     }
@@ -146,6 +175,10 @@ public class Player extends Character {
         return positon;
     }
 
+    public ArrayList<Item> getBag() {
+        return bag;
+    }
+
     public void setPositon(int positon) {
         this.positon = positon;
     }
@@ -163,7 +196,7 @@ public class Player extends Character {
             bag.add(item);
             System.out.println("獲得" + item.ability.getName());
         } else {
-            System.out.println("背包已滿，無法獲得");
+            System.out.println("背包已滿，無法獲得" + "\'" + item.ability.getName() + "\'");
         }
     }
 
