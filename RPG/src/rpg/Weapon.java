@@ -14,7 +14,7 @@ public class Weapon extends Item {
         this.ability.setStr(4);
         this.ability.setEquipmentWeight(15);
         this.setInitial(true);
-//        ability.setName("斧頭");
+        ability.setName("斧頭");
     }
 
     public void wand() {

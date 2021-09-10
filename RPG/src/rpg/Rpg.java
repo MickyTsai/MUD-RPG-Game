@@ -23,79 +23,79 @@ public class Rpg {
         System.out.println("歡迎進入遊戲");
         System.out.print("請輸入角色名稱->");
         newPlayer.getAbility().setName(sc.next());
-        System.out.println("你好" + newPlayer.getAbility().getName());
-        System.out.println(newPlayer);
+        System.out.println("你好 " + newPlayer.getAbility().getName());
+        System.out.println();
+//        System.out.println(newPlayer); 
         
 
         //選擇起始武器（調用初始武器的ArrayList)
         System.out.println("請選擇一個武器");
-        Weapon w = new Weapon();
-        ArrayList<Item> weaponList = new ArrayList<Item>();
+        ArrayList<Weapon> weaponList = new ArrayList<Weapon>();
         
-        w.axe();
+        Weapon w1 = new Weapon();
+        w1.axe();
         System.out.print("選擇1 ");
-        w.printItem();
-        weaponList.add(w);
+        w1.printItem();
+        weaponList.add(w1);
         
-        w.bow();
+        Weapon w2 = new Weapon();
+        w2.bow();
         System.out.print("選擇2 ");
-        w.printItem();
-        weaponList.add(w);
+        w2.printItem();
+        weaponList.add(w2);
         
-        w.wand();
+        Weapon w3 = new Weapon();
+        w3.wand();
         System.out.print("選擇3 ");
-        w.printItem();
-        weaponList.add(w);
+        w3.printItem();
+        weaponList.add(w3);
         
         System.out.print("選擇->");
-        int choose = sc.nextInt();
-        newPlayer.wearWeapon(weaponList.get(choose));
-        System.out.println(newPlayer);
-      
-
-//        for(int i = 0; i < weaponList.size(); i++){
-//            System.out.println(weaponList);
-//        }
+        int chooseW = sc.nextInt();
+        System.out.println();
+        newPlayer.wearWeapon(weaponList.get(chooseW - 1));
+        newPlayer.printAll();
+        System.out.println();
         
+           
+        //選擇起始防具（調用初始防具的ArrayList)
+        System.out.println("請選擇一個防具");
+        ArrayList<Armor> armorList = new ArrayList<Armor>();   
         
+        Armor a1 = new Armor();
+        a1.woodenArmor();
+        System.out.print("選擇1 ");
+        a1.printItem();
+        armorList.add(a1);
         
+        Armor a2 = new Armor();
+        a2.chainMail();
+        System.out.print("選擇2 ");
+        a2.printItem();
+        armorList.add(a2);
         
+        Armor a3 = new Armor();
+        a3.plateArmor();
+        System.out.print("選擇3 ");
+        a3.printItem();
+        armorList.add(a3);
         
+        System.out.print("選擇->");
+        int chooseA = sc.nextInt();
+        System.out.println();
+        newPlayer.wearArmor(armorList.get(chooseA - 1));
+        newPlayer.printAll();
+        System.out.println();
+//        System.out.println(Random(1, 2));
         
-//        ArrayList<Weapon> armorList = new ArrayList<Item>();    
-
-//        for(int i = 0; i < weaponList.size(); i++){
-//            System.out.println("名稱：" + weaponList.get(i).getName() + 
-//                        "攻擊：" + weaponList.get(i).getAttack() + 
-//                        "重量：" + weaponList.get(i).getWeight() 
-//            );
-//        }
-//        int chooseW = sc.nextInt();
-//        newPlayer.setStr(newPlayer.getStr() + weaponList.get(chooseW).getAttack()) ;
-//        
-//        
-//        //選擇起始防具 （調用初始防具的ArrayList)
-//        System.out.println("請選擇一個防具");
-//        for(int i = 0; i < List.size(); i++){
-//            System.out.println("名稱：" + armorList.get(i).getName() + 
-//                        "攻擊：" + armorList.get(i).getAttack() + 
-//                        "重量：" + armorList.get(i).getWeight()
-//            );
-//        }
-//        
-//
-//
-        //進入隨機地圖
-        
-        
-        //進入事件
-        
-        
-        
-        //死亡或殺死一個王
-        
-        
-        //過關
+        int MapCount = 0;
+//        while(true){
+//            int Map = Random(1, 2);
+//            
+//        }   
+    }
+    public static int Random (int min, int max){
+        return (int)(Math.random() * (max - min + 1) + min);
     }
 }
 
