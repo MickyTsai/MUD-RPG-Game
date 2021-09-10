@@ -3,76 +3,49 @@ package rpg;
 import java.util.ArrayList;
 
 public class Monster extends Character {
-    private final ArrayList<Item> itemList = new ArrayList<Item>();  // 掉落物清單
-    private final Item item = new Item();  // 用來new出新掉落物
+    private ArrayList<Animal> animals = new ArrayList<Animal>();
+    private ArrayList<Demon> demons = new ArrayList<Demon>();
+    protected ArrayList<Item> dropItemList = new ArrayList<Item>();  // 掉落物清單
+    protected Item dropItem = new Item();  // 用來new出新掉落物
 
     public Monster() {
-        setKind(2);  // 初始化設定動物在地圖2(深淵)
-        item.heartOfGhost();  // 初始化設定掉落物為動物皮
-        itemList.add(item);  // 將動物皮加入掉落物清單
+        setAnimals();  // 設定動物清單
+        setDemons();  //設定魔物清單
     }
 
-    public void demonWolf() {
-        ability.setName("魔狼");
-        ability.setHp(2);
-        ability.setStr(7);
-        ability.setDef(2);
-        ability.setHit(5);
-        ability.setDex(4);
-        ability.setExp(5);
-        ability.setLV(1);
-        setAbility(ability);
-        if (isDead()) {
-            item.wolfTooth();
-            itemList.add(item);
-        }
-    }  // 設定魔狼的基本屬性&死後掉落物
+    private void setAnimals() {
+        Animal animal = new Animal();
+        animal.wolf();
+        animals.add(animal);
+        animal.lion();
+        animals.add(animal);
+        animal.boar();
+        animals.add(animal);
+        animal.elephant();
+        animals.add(animal);
+    }
 
-    public void celestialHuang() {
-        ability.setName("黃大仙");
-        ability.setHp(4);
-        ability.setStr(6);
-        ability.setDef(3);
-        ability.setHit(5);
-        ability.setDex(5);
-        ability.setExp(5);
-        ability.setLV(1);
-        setAbility(ability);
-        if (isDead()) {
-            item.leather();
-            itemList.add(item);
-        }
-    }  // 設定黃大仙的基本屬性&死後掉落物
+    public ArrayList<Animal> getAnimals() {
+        return animals;
+    }
 
-    public void mountainDemon() {
-        ability.setName("魑");
-        ability.setHp(3);
-        ability.setStr(6);
-        ability.setDef(3);
-        ability.setHit(4);
-        ability.setDex(4);
-        ability.setExp(5);
-        ability.setLV(1);
-        setAbility(ability);
-        if (isDead()) {
-            item.glass();
-            itemList.add(item);
-        }
-    }  // 設定魑的基本屬性&死後掉落物
+    private void setDemons() {
+        Demon demon = new Demon();
+        demon.demonWolf();
+        demons.add(demon);
+        demon.celestialHuang();
+        demons.add(demon);
+        demon.mountainDemon();
+        demons.add(demon);
+        demon.bahamut();
+        demons.add(demon);
+    }
 
-    public void bahamut() {
-        ability.setName("巴哈姆特");
-        ability.setHp(7);
-        ability.setStr(8);
-        ability.setDef(4);
-        ability.setHit(7);
-        ability.setDex(5);
-        ability.setExp(10);
-        ability.setLV(2);
-        setAbility(ability);
-        if (isDead()) {
-            item.demomSlayerMark();
-            itemList.add(item);
-        }
-    }  // 設定巴哈姆特的基本屬性&死後掉落物
+    public ArrayList<Demon> getDemons() {
+        return demons;
+    }
+
+    public ArrayList<Item> getDropItemList() {
+        return dropItemList;
+    }
 }

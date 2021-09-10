@@ -1,6 +1,6 @@
 package rpg;
 public class Character {
-    private Ability ability;
+    Ability ability;
     private int kind;
 
     public Ability getAbility() {
