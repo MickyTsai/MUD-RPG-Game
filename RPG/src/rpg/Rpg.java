@@ -145,7 +145,7 @@ public class Rpg {
                             System.out.println("輸入exit離開");
                             
                             
-                            System.out.println("請選擇道具 不使用就不輸入");
+                            System.out.println("請選擇道具 不使用就輸入0");
                             int selectInt = sc.nextInt();
                             System.out.println("顯示道具功能請輸入:status\n"
                                     + "使用道具請輸入:use\n"
@@ -236,7 +236,7 @@ public class Rpg {
                                 int selectInt = sc.nextInt();
                                 System.out.println("顯示道具功能請輸入:status\n"
                                         + "使用道具請輸入:use\n"
-                                        + "輸入exit離開");
+                                        + "輸入exit離開\n");
                                 String selectStr = sc.next();
 
                                 if(selectStr.equals("use")){
@@ -345,11 +345,11 @@ public class Rpg {
                             System.out.println("輸入exit離開");
                             
                             
-                            System.out.println("請選擇道具 不使用就不輸入");
+                            System.out.println("請選擇道具 不使用就輸入0");
                             int selectInt = sc.nextInt();
                             System.out.println("顯示道具功能請輸入:status\n"
                                     + "使用道具請輸入:use\n"
-                                    + "輸入exit離開");
+                                    + "輸入exit離開\n");
                             String selectStr = sc.next();
                             
                             if(selectStr.equals("use")){
