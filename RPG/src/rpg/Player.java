@@ -17,7 +17,7 @@ public class Player extends Character {
         initialAbility.setItemMaxmum(5);
         initialAbility.setWeaponMaxmum(1);
         initialAbility.setMaxHp(5);
-        initialAbility.setHp(5);
+        initialAbility.setHp(1);
         initialAbility.setDef(5);       //初始素質之設定
         initialAbility.setDex(5);
         initialAbility.setStr(5);

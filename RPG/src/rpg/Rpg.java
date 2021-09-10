@@ -55,7 +55,9 @@ public class Rpg {
                 newPlayer.setPositon(0);//步數重算
                 newPlayer = new Player(); //角色回到選完武器的初始
                 newPlayer.ability.setName(name);
-                        
+                newPlayer.wearWeapon(chooseWeapon()); //穿上武器
+                newPlayer.wearArmor(chooseArmor()); //穿上防具
+        
             }
             
             
