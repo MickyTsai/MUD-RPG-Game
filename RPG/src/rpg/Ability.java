@@ -161,6 +161,10 @@ public class Ability {
         hit += value;
     }
 
+    public void addExp(int value) {
+        exp += value;
+    }
+
     public void lvUp() {
         LV++;
     }
@@ -181,5 +185,14 @@ public class Ability {
         def += newAbility.def;
         hit += newAbility.hit;
         equipmentWeight += newAbility.equipmentWeight;
+    }
+
+    public void unMerge(Ability newAbility) {
+        hp -= newAbility.hp;
+        str -= newAbility.str;
+        dex -= newAbility.dex;
+        def -= newAbility.def;
+        hit -= newAbility.hit;
+        equipmentWeight -= newAbility.equipmentWeight;
     }
 }
