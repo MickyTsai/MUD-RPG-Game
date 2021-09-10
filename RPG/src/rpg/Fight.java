@@ -1,7 +1,6 @@
 package rpg;
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
+import java.util.Random;
 
 public class Fight {
     private Random random = new Random();
@@ -35,6 +34,7 @@ public class Fight {
                 player.buffCountDown();
             }
         }
+        round = 0;  //round 歸零
         player.removeBuff(); //buff移除
         player.setFighting(false); //離開戰鬥狀態
         overFight(player, monster); //結算
@@ -87,12 +87,16 @@ public class Fight {
         }
     }
 
-    public void overFight(Player player, Monster monster) {
+    public void overFight(Player player, Monster monster) throws InterruptedException {
         if (player.isDead()) {
             System.out.println("你死了QQ，請重新來過吧");
         } else {
+            int exp = monster.getAbility().getExp();
+            Thread.sleep(1500);
             System.out.println("恭喜擊敗 " + monster.getAbility().getName() + " !");
-            player.getAbility().addExp(monster.getAbility().getExp());
+            Thread.sleep(1500);
+            player.getAbility().addExp(exp);
+            System.out.println("獲得" + exp + "EXP");
             player.lvelUp();
             player.getItem(monster.getDropItem());
         }

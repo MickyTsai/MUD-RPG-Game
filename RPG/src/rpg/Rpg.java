@@ -21,19 +21,10 @@ public class Rpg {
         Fight fight = new Fight();
         
         //森林怪物清單
-//        Monster monster = new Monster();
-//        monster.getAnimals();
+        Monster monster = new Monster();
+        monster.setAnimals();
         //森林怪物清單
-//        ArrayList<Animal> forest = new ArrayList<Animal>();
-//        Animal animal1 = new Animal();
-//        animal1.wolf();
-//        forest.add(animal1);
-//        Animal animal2 = new Animal();
-//        animal2.lion();
-//        forest.add(animal2);
-//        Animal animal3 = new Animal();
-//        animal3.boar();
-//        forest.add(animal3);
+        ArrayList<Animal> forest = monster.getAnimals();
 
         //角色命名
         Player newPlayer = new Player();
@@ -72,8 +63,8 @@ public class Rpg {
         int chooseW = sc.nextInt();
         System.out.println();
         newPlayer.wearWeapon(weaponList.get(chooseW - 1));
-        newPlayer.printAll();
-        System.out.println();
+//        newPlayer.printAll();
+//        System.out.println();
         
            
         //選擇起始防具（調用初始防具的ArrayList)
@@ -102,16 +93,16 @@ public class Rpg {
         int chooseA = sc.nextInt();
         System.out.println();
         newPlayer.wearArmor(armorList.get(chooseA - 1));
-        newPlayer.printAll();
-        System.out.println();
-//        System.out.println(Random(1, 2));
+//        newPlayer.printAll();
+//        System.out.println();
+
         
         player = newPlayer;//將角色選完武器的狀態先暫存
         int kindCount = 0; //過關的地圖數
         while(true){
             //地圖選擇（隨機）
             int kind = Random(1, 3);
-            kind = 2;// 測試用
+            kind = 1;// 測試用
                     
             switch (kind){
                 case 1:
@@ -121,10 +112,32 @@ public class Rpg {
                     System.out.println("進入地圖：深淵");
                     break;
             }
-                       
             
             //地圖：森林
             while (kind == 1 && kindCount < 2 ){
+                
+                while(true){
+                    System.out.println("選擇行動");
+                    System.out.println("1.繼續冒險");
+                    System.out.println("2.顯示角色狀態 + 顯示裝備");
+                    System.out.println("3.打開背包");
+                    int choose =  sc.nextInt();
+                    switch (choose){
+                        case 1:
+                            System.out.println("深入森林冒險" );
+                            break;
+                        case 2:
+                            newPlayer.printAll();
+                            break;
+                        case 3:
+                            newPlayer.supply();
+                            break;
+                    }
+                    if(choose == 1){
+                        break;
+                    }
+                }
+                
                 
                 //Boss戰
                 if (newPlayer.getPositon() == 5){
@@ -145,9 +158,11 @@ public class Rpg {
                     break;
                 }
                 
+                
                 //事件
                 int event = Random(0, 5);
                 event = sc.nextInt();// 測試用
+                
                 switch (event){
                     case 0://沒事發生 
                         System.out.println("沒事發生，繼續走 ");
@@ -163,7 +178,7 @@ public class Rpg {
                         animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
                         
                         System.out.println("遇到" + animal.ability.getName() + "要逃跑嗎？ ");
-                        System.out.println("選擇1：逃跑\n " + "選擇2：戰鬥 "); 
+                        System.out.println("選擇1：逃跑\n" + "選擇2：戰鬥 "); 
                         int choose = sc.nextInt();       
                         switch (choose){
                             case 1:
@@ -353,7 +368,8 @@ public class Rpg {
             if (kindCount == 2){
                 break;
             }    
-        }   
+        }
+        System.out.println("恭喜通關！！！！  你是真正的勇者");
     }
     public static int Random (int min, int max){
         return (int)(Math.random() * (max - min + 1) + min);

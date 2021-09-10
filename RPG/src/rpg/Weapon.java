@@ -1,4 +1,5 @@
 package rpg;
+
 public class Weapon extends Item {
 
     private boolean initial;
@@ -38,10 +39,8 @@ public class Weapon extends Item {
     public boolean getInitial() {
         return this.initial;
     }
-    
+
     public void printItem() {
-        System.out.println("名稱:" + this.ability.getName()
-                + "\t重量:" + this.ability.getEquipmentWeight()
-                + "\t攻擊力:" + this.ability.getStr());
+        System.out.println(ability.getName() + " 攻擊力: " + ability.getStr() + " 重量: " + ability.getEquipmentWeight());
     }
 }
