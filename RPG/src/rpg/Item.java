@@ -1,6 +1,5 @@
 package rpg;
 public class Item {
-
     protected Ability ability = new Ability();
     private int buffTime;
     private boolean useable;
