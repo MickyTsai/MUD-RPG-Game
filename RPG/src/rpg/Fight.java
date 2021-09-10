@@ -25,7 +25,7 @@ public class Fight {
                 System.out.println(player.getAbility().getName() + "攻擊!");
                 attack(player, monster);
                 System.out.println(monster.getAbility().getName() + "攻擊!");
-                attack(player, monster);
+                attack(monster, player);
                 player.buffCountDown(); //玩家buff扣除一回合
             }
         } else {
@@ -34,8 +34,8 @@ public class Fight {
                 round++;
                 System.out.println("\n第" + round + "回合");
                 System.out.println(monster.getAbility().getName() + "攻擊!");
-                attack(player, monster);
-                System.out.println(monster.getAbility().getName() + "攻擊!");
+                attack(monster, player);
+                System.out.println(player.getAbility().getName() + "攻擊!");
                 attack(player, monster);
                 player.buffCountDown();
             }
@@ -50,22 +50,27 @@ public class Fight {
         return random.nextDouble() >= (defer.getAbility().getDex() - atker.getAbility().getHit()) * 0.2;///判斷如果隨機(0~1)大於(被攻擊方敏捷-攻擊方命中*20%)，就攻擊成功
     }
 
-    public void attack(Character former, Character latter) throws InterruptedException {
+    public void attack(Character atker, Character defer) throws InterruptedException {
         //先手攻擊
-        if (isHit(former, latter)) { //判定命中
+        if (isHit(atker, defer)) { //判定命中
             Thread.sleep(1500);
             System.out.println("命中了");
-            int damage = former.getAbility().getStr() - latter.getAbility().getDef(); //計算傷害
+            int damage = atker.getAbility().getStr() - defer.getAbility().getDef(); //計算傷害
             if (damage > 0) { //判定傷害是否>0
-                latter.getAbility().addHp(damage * (-1)); //扣血(+負的血量)
+                defer.getAbility().addHp(damage * (-1)); //扣血(+負的血量)
                 Thread.sleep(1500);
-                System.out.println(former.getAbility().getName() + "對" + latter.getAbility().getName() + "造成了" + damage + "傷害");
-                if (latter.isDead()) { //死亡就跳出
+                System.out.println(atker.getAbility().getName() + "對" + defer.getAbility().getName() + "造成了" + damage + "傷害\n");
+                if (defer.isDead()) { //死亡就跳出
                     return;
                 }
             } else {
                 Thread.sleep(1500);
-                System.out.println("被擋下來了，沒有傷害");
+                defer.getAbility().addHp(-1);
+                System.out.println("被擋下來了，只扣一滴\n");  //被擋下，也有一滴傷害
+                if (defer.isDead()) { //死亡就跳出
+                    return;
+                }
+                Thread.sleep(1500);
             }
         } else {
             Thread.sleep(1500);
@@ -75,7 +80,7 @@ public class Fight {
 
     public void overFight(Player player, Monster monster) throws InterruptedException {
         if (player.isDead()) {
-            System.out.println("你死了QQ，請重新來過吧");
+            System.out.println("你死了QQ，請重新來過吧\n\n");
         } else {
             int exp = monster.getAbility().getExp();
             Thread.sleep(1500);

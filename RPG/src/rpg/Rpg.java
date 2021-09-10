@@ -24,10 +24,11 @@ public class Rpg {
 
         //角色命名
         Player newPlayer = new Player();
-        Player player = new Player();
+        
         System.out.println("歡迎進入遊戲");
         System.out.print("請輸入角色名稱->");
-        newPlayer.getAbility().setName(sc.next());
+        String name = sc.next();
+        newPlayer.getAbility().setName(name);
         System.out.println("你好 " + newPlayer.getAbility().getName());
         System.out.println();
 //        System.out.println(newPlayer); 
@@ -93,7 +94,7 @@ public class Rpg {
 //        System.out.println();
 
         
-        player = newPlayer;//將角色選完武器的狀態先暫存
+        
         int kindCount = 0; //過關的地圖數
         while(true){
             //地圖選擇（隨機）
@@ -178,7 +179,8 @@ public class Rpg {
                     
                     if(newPlayer.isDead()){
                         newPlayer.setPositon(0);//步數重算
-                        newPlayer = player; //角色回到選完武器的初始
+                        newPlayer = new Player(); //角色回到選完武器的初始
+                        newPlayer.ability.setName(name);
                         break;
                     }
                     kindCount++; //沒死＝勝利 
@@ -192,7 +194,7 @@ public class Rpg {
                 
                 
                 //事件
-                int event = Random(0, 5);
+                int event = Random(0, 4);
 //                event = sc.nextInt();// 測試用
                 
                 switch (event){
@@ -233,7 +235,7 @@ public class Rpg {
                                 int selectInt = sc.nextInt();
                                 System.out.println("顯示道具功能請輸入:status\n"
                                         + "使用道具請輸入:use\n"
-                                        + "輸入exit離開\n");
+                                        + "輸入exit離開");
                                 String selectStr = sc.next();
 
                                 if(selectStr.equals("use")){
@@ -256,7 +258,8 @@ public class Rpg {
                         }  
                         if(newPlayer.isDead()){
                             newPlayer.setPositon(0);//步數重算
-                            newPlayer = player; //角色回到選完武器的初始
+                            newPlayer = new Player(); //角色回到選完武器的初始
+                            newPlayer.ability.setName(name);
                             break;
                         }
                         newPlayer.goOneStep();
@@ -276,7 +279,8 @@ public class Rpg {
                         
                         if(newPlayer.isDead()){
                             newPlayer.setPositon(0);//步數重算
-                            newPlayer = player; //角色回到選完武器的初始
+                            newPlayer = new Player(); //角色回到選完武器的初始
+                            newPlayer.ability.setName(name);
                             break;
                         }
                         newPlayer.goOneStep();
@@ -295,6 +299,7 @@ public class Rpg {
                         break;
                     
                     case 4://遇到寶箱
+                        System.out.println("遇到寶箱!!! ");
                         ArrayList<Item> treasureList1 = new ArrayList<Item>();
                         Item healingPotion = new Item();
                         healingPotion.healingPotion();
@@ -308,7 +313,7 @@ public class Rpg {
                         bow.bow();
                         treasureList1.add(bow);
                         
-                        newPlayer.getItem(treasureList1.get(Random(0, 3)));
+                        newPlayer.getItem(treasureList1.get(Random(0, 2)));
                         
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
@@ -355,7 +360,7 @@ public class Rpg {
                             int selectInt = sc.nextInt();
                             System.out.println("顯示道具功能請輸入:status\n"
                                     + "使用道具請輸入:use\n"
-                                    + "輸入exit離開\n");
+                                    + "輸入exit離開");
                             String selectStr = sc.next();
                             
                             if(selectStr.equals("use")){
@@ -387,7 +392,8 @@ public class Rpg {
                     
                     if(newPlayer.isDead()){
                         newPlayer.setPositon(0);//步數重算
-                        newPlayer = player; //角色回到選完武器的初始
+                        newPlayer = new Player(); //角色回到選完武器的初始
+                        newPlayer.ability.setName(name);
                         break;
                     }
                     kindCount++; //沒死＝勝利 
@@ -400,7 +406,7 @@ public class Rpg {
                 }
                 
                 //事件
-                int event = Random(0, 5);
+                int event = Random(0, 4);
 //                event = sc.nextInt();// 測試用
                 switch (event){
                     case 0://沒事發生 
@@ -440,7 +446,7 @@ public class Rpg {
                                 int selectInt = sc.nextInt();
                                 System.out.println("顯示道具功能請輸入:status\n"
                                         + "使用道具請輸入:use\n"
-                                        + "輸入exit離開\n");
+                                        + "輸入exit離開");
                                 String selectStr = sc.next();
 
                                 if(selectStr.equals("use")){
@@ -462,7 +468,8 @@ public class Rpg {
                         }  
                         if(newPlayer.isDead()){
                             newPlayer.setPositon(0);//步數重算
-                            newPlayer = player; //角色回到選完武器的初始
+                            newPlayer = new Player(); //角色回到選完武器的初始
+                            newPlayer.ability.setName(name);
                             break;
                         }
                         newPlayer.goOneStep();
@@ -482,7 +489,8 @@ public class Rpg {
                         
                         if(newPlayer.isDead()){
                             newPlayer.setPositon(0);//步數重算
-                            newPlayer = player; //角色回到選完武器的初始
+                            newPlayer = new Player(); //角色回到選完武器的初始
+                            newPlayer.ability.setName(name);
                             break;
                         }
                         newPlayer.goOneStep();
@@ -500,6 +508,7 @@ public class Rpg {
                         break;
                     
                     case 4://遇到寶箱
+                        System.out.println("遇到寶箱!!! ");
                         ArrayList<Item> treasureList2 = new ArrayList<Item>();
                         Item healingPotion = new Item();
                         healingPotion.healingPotion();
@@ -513,7 +522,7 @@ public class Rpg {
                         defenseIncreasePotion.defenceIncreasePotion();
                         treasureList2.add(defenseIncreasePotion);
                         
-                        newPlayer.getItem(treasureList2.get(Random(0, 3)));
+                        newPlayer.getItem(treasureList2.get(Random(0, 2)));
                         
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
