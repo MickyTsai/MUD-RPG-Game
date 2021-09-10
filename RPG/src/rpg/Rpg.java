@@ -20,11 +20,7 @@ public class Rpg {
         Scanner sc = new Scanner(System.in);
         Fight fight = new Fight();
         Monster monster = new Monster();
-//        //森林怪物清單
-//        Monster monster = new Monster();
-//        monster.setAnimals();
-//        //森林怪物清單
-//        ArrayList<Animal> forest = monster.getAnimals();
+
 
         //角色命名
         Player newPlayer = new Player();
@@ -101,7 +97,7 @@ public class Rpg {
         int kindCount = 0; //過關的地圖數
         while(true){
             //地圖選擇（隨機）
-            int kind = Random(1, 3);
+            int kind = Random(1, 2);
 //            kind = 1;// 測試用
                     
             switch (kind){
@@ -153,11 +149,11 @@ public class Rpg {
                             String selectStr = sc.next();
                             
                             if(selectStr.equals("use")){
-                                newPlayer.use(selectInt - 1);
-                                if(newPlayer.use(selectInt - 1)){
+                                boolean bo = newPlayer.use(selectInt);
+                                if(bo){
                                    System.out.println("成功使用"); 
                                 }
-                                if(!newPlayer.use(selectInt - 1)){
+                                if(bo){
                                    System.out.println("此道具無法使用"); 
                                 }
                             }else if(selectStr.equals("status")){
@@ -204,6 +200,7 @@ public class Rpg {
                         System.out.println("沒事發生，繼續走 ");
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        System.out.println();
                         break;
                     
                         
@@ -232,7 +229,7 @@ public class Rpg {
                                 break;
                             case 3:
                                 newPlayer.supply();
-                                System.out.println("請選擇道具");
+                                System.out.println("請選擇道具 不使用就輸入0");
                                 int selectInt = sc.nextInt();
                                 System.out.println("顯示道具功能請輸入:status\n"
                                         + "使用道具請輸入:use\n"
@@ -240,18 +237,22 @@ public class Rpg {
                                 String selectStr = sc.next();
 
                                 if(selectStr.equals("use")){
-                                    newPlayer.use(selectInt - 1);
-                                    if(newPlayer.use(selectInt - 1)){
-                                    System.out.println("成功使用"); 
+                                    boolean bo = newPlayer.use(selectInt);
+                                    if(bo){
+                                        System.out.println("成功使用"); 
                                     }
-                                    if(!newPlayer.use(selectInt - 1)){
+                                    if(bo){
                                         System.out.println("此道具無法使用"); 
                                     }
                                 }else if(selectStr.equals("status")){
                                     newPlayer.getBag().get(selectInt - 1).printItem();
                                 }else if(selectStr.equals("exit")){
-                                   break; 
-                                }  
+                                   System.out.println("背包關上"); 
+                                }
+                                System.out.println("還想用道具!? 認命戰鬥吧"); 
+                                fight.startFight(newPlayer, animal);
+                                break;
+                                
                         }  
                         if(newPlayer.isDead()){
                             newPlayer.setPositon(0);//步數重算
@@ -260,14 +261,16 @@ public class Rpg {
                         }
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        System.out.println();
                         break;
                     
                         
                         
                     case 2://遇到主動怪物
-                        System.out.println("遇到主動怪物，不能逃跑！ ");
+                        
 //                        animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
                         Animal animal2 = monster.genAnimal();//隨機挑怪物
+                        System.out.println("遇到主動怪物" + animal2.ability.getName() + "不能逃跑！");
                         System.out.println("戰鬥開始"); 
                         fight.startFight(newPlayer, animal2);
                         
@@ -278,6 +281,7 @@ public class Rpg {
                         }
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        System.out.println();
                         break;    
                     
                     
@@ -287,6 +291,7 @@ public class Rpg {
                         System.out.println("遇到岔路 ");
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        System.out.println();
                         break;
                     
                     case 4://遇到寶箱
@@ -307,6 +312,7 @@ public class Rpg {
                         
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        System.out.println();
                         break;
                 }   
             }
@@ -353,8 +359,11 @@ public class Rpg {
                             String selectStr = sc.next();
                             
                             if(selectStr.equals("use")){
-                                newPlayer.use(selectInt - 1);
-                                if(!newPlayer.use(selectInt - 1)){
+                                boolean bo = newPlayer.use(selectInt);
+                                if(bo){
+                                   System.out.println("使用成功"); 
+                                }
+                                if(bo){
                                    System.out.println("此道具無法使用"); 
                                 }
                             }else if(selectStr.equals("status")){
@@ -398,6 +407,7 @@ public class Rpg {
                         System.out.println("沒事發生，繼續走 ");
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        System.out.println();
                         break;
                     
                         
@@ -426,23 +436,29 @@ public class Rpg {
                                 break;
                             case 3:
                                 newPlayer.supply();
-                                System.out.println("請選擇道具");
+                                System.out.println("請選擇道具 不使用就輸入0");
                                 int selectInt = sc.nextInt();
                                 System.out.println("顯示道具功能請輸入:status\n"
                                         + "使用道具請輸入:use\n"
-                                        + "輸入exit離開");
+                                        + "輸入exit離開\n");
                                 String selectStr = sc.next();
 
                                 if(selectStr.equals("use")){
-                                    newPlayer.use(selectInt - 1);
-                                    if(!newPlayer.use(selectInt - 1)){
+                                    boolean bo = newPlayer.use(selectInt);
+                                    if(bo){
+                                        System.out.println("成功使用"); 
+                                    }
+                                    if(bo){
                                         System.out.println("此道具無法使用"); 
                                     }
                                 }else if(selectStr.equals("status")){
                                     newPlayer.getBag().get(selectInt - 1).printItem();
                                 }else if(selectStr.equals("exit")){
-                                   break; 
-                                }    
+                                   System.out.println("背包關上"); 
+                                }
+                                System.out.println("還想用道具!? 認命戰鬥吧"); 
+                                fight.startFight(newPlayer, demon);
+                                break;    
                         }  
                         if(newPlayer.isDead()){
                             newPlayer.setPositon(0);//步數重算
@@ -451,14 +467,16 @@ public class Rpg {
                         }
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        System.out.println();
                         break;
                     
                         
                         
                     case 2://遇到主動怪物
-                        System.out.println("遇到主動怪物，不能逃跑！ ");
+                        
 //                        animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
                         Demon demon2 = monster.genDemon();//隨機挑怪物
+                        System.out.println("遇到主動怪物" + demon2.ability.getName() + "不能逃跑！");
                         System.out.println("戰鬥開始"); 
                         fight.startFight(newPlayer, demon2);
                         
@@ -469,12 +487,16 @@ public class Rpg {
                         }
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        System.out.println();
+                        
                         break;    
                     
                     case 3: //遇到岔路
                         System.out.println("遇到岔路 ");
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        System.out.println();
+                        
                         break;
                     
                     case 4://遇到寶箱
@@ -495,6 +517,8 @@ public class Rpg {
                         
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                        System.out.println();
+                        
                         break;
                 }   
             }
@@ -503,7 +527,9 @@ public class Rpg {
                 break;
             }    
         }
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!");
         System.out.println("恭喜通關!!!你是真正的勇者");
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!");
     }
     public static int Random (int min, int max){
         return (int)(Math.random() * (max - min + 1) + min);
