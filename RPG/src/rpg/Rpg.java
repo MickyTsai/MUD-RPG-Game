@@ -5,9 +5,9 @@
  */
 package rpg;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 /**
  *
  * @author mickytsai
@@ -48,9 +48,15 @@ public class Rpg {
         System.out.println();
 
         int kindCount = 0; //過關的地圖數
+        int kind = 0;
+
         while(true){
             //地圖選擇（隨機）
-            int kind = Random(1, 2);
+
+
+            if(kind == 0){
+                kind = Random(1, 2);
+            }
 //            kind = 1;// 測試用
             if(newPlayer.isDead()){
                 System.out.println("===你已重生 再接再厲!===");
@@ -98,9 +104,7 @@ public class Rpg {
                     System.out.println("1.繼續冒險");
                     System.out.println("2.顯示角色狀態 + 顯示裝備");
                     System.out.println("3.打開背包");
-
                     int choose;
-
                     try {
                         choose =  sc.nextInt();
                     } catch (InputMismatchException e) {
@@ -120,6 +124,7 @@ public class Rpg {
                         case 3:
                             if(newPlayer.getBag().size() == 0){
                                 System.out.println("背包裡面空空如也");
+                                System.out.println();
                                 break;
                             }
                             System.out.println();
@@ -133,28 +138,45 @@ public class Rpg {
                             System.out.println("1~" + newPlayer.getBag().size() +
                                     " use = 使用道具1~" +
                                     newPlayer.getBag().size());
-                            System.out.println("輸入exit離開");
+                            System.out.println("輸入exit 來關閉背包");
+                            System.out.println("(ex.裕顯示背包中第1個道具的功能，請打：1 status)");
 
+                            String selectIntNum;
+                            String selectStr;
 
-                            System.out.println("請先選擇哪個道具 不使用就輸入0");
-                            int selectInt = sc.nextInt();
-                            System.out.println("顯示道具功能請輸入:status\n"
-                                    + "使用道具請輸入:use\n"
-                                    + "輸入exit離開");
-                            String selectStr = sc.next();
-
-                            if(selectStr.equals("use")){
-                                boolean bo = newPlayer.use(selectInt);
-                                if(bo){
-                                    System.out.println("成功使用");
+                            while (true) {
+                                sc = new Scanner(System.in);
+                                selectIntNum = sc.next();
+                                if(selectIntNum.equals("exit")) {
+                                    break;
                                 }
-                                if(!bo){
-                                    System.out.println("此道具無法使用");
+
+                                selectStr = sc.next();
+
+                                int selectInt;
+                                System.out.println();
+
+                                try {
+                                    selectInt = Integer.parseInt(selectIntNum);
+                                } catch (NumberFormatException e) {
+                                    System.out.println("輸入錯了喔!\n請參照ex，先打裕選擇的道具在背包的第幾個，再打1個空格，再打執行的功能喔！");
+                                    continue;
                                 }
-                            }else if(selectStr.equals("status")){
-                                newPlayer.getBag().get(selectInt - 1).printItem();
-                            }else if(selectStr.equals("exit")){
-                                break;
+
+                                if(selectStr.equals("use")){
+                                    boolean bo = newPlayer.use(selectInt);
+                                    if(bo){
+                                        System.out.println("成功使用");
+                                        break;
+                                    }
+                                    if(!bo){
+                                        System.out.println("此道具無法使用");
+                                        break;
+                                    }
+                                }else if(selectStr.equals("status")){
+                                    newPlayer.getBag().get(selectInt - 1).printItem();
+                                    break;
+                                }
                             }
                             break;
                         default:
@@ -221,15 +243,7 @@ public class Rpg {
                         System.out.println("遇到 " + animal.ability.getName() + " 雙方大眼瞪小眼 你要逃跑嗎? ");
                         Thread.sleep(1500);
                         System.out.println("選擇1：逃跑\n" + "選擇2：戰鬥\n" + "選擇3：使用道具 ");
-                        int choose;
-
-                        try {
-                            choose =  sc.nextInt();
-                        } catch (InputMismatchException e) {
-                            System.out.println("沒有這個功能啦!快回去重選!");
-                            sc.next();
-                            continue;
-                        }  // 防呆(抓取可能輸入非數字的錯誤)
+                        int choose = sc.nextInt();
 
                         switch (choose){
                             case 1:
@@ -258,25 +272,54 @@ public class Rpg {
                                 System.out.println();
                                 newPlayer.supply();
                                 System.out.println();
-                                System.out.println("請先選擇哪個道具 不使用就輸入0");
-                                int selectInt = sc.nextInt();
-                                System.out.println("顯示道具功能請輸入:status\n"
-                                        + "使用道具請輸入:use\n"
-                                        + "輸入exit離開");
-                                String selectStr = sc.next();
+                                System.out.println("背包說明：");
+                                System.out.println("1~" + newPlayer.getBag().size() +
+                                        " status = 顯示道具功能 1~" +
+                                        newPlayer.getBag().size());
+                                System.out.println("1~" + newPlayer.getBag().size() +
+                                        " use = 使用道具1~" +
+                                        newPlayer.getBag().size());
+                                System.out.println("輸入exit 來關閉背包");
+                                System.out.println("(ex.裕顯示背包中第1個道具的功能，請打：1 status)");
 
-                                if(selectStr.equals("use")){
-                                    boolean bo = newPlayer.use(selectInt);
-                                    if(bo){
-                                        System.out.println("成功使用");
+                                String selectIntNum;
+                                String selectStr;
+
+                                while (true) {
+                                    sc = new Scanner(System.in);
+                                    selectIntNum = sc.next();
+                                    if(selectIntNum.equals("exit")) {
+                                        System.out.println("背包關上!");
+                                        break;
                                     }
-                                    if(!bo){
-                                        System.out.println("此道具無法使用");
+
+                                    selectStr = sc.next();
+
+                                    int selectInt;
+                                    System.out.println();
+
+                                    try {
+                                        selectInt = Integer.parseInt(selectIntNum);
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("輸入錯了喔!\n請參照ex，先打裕選擇的道具在背包的第幾個，再打1個空格，再打執行的功能喔！");
+                                        sc.nextLine();
+                                        continue;
                                     }
-                                }else if(selectStr.equals("status")){
-                                    newPlayer.getBag().get(selectInt - 1).printItem();
-                                }else if(selectStr.equals("exit")){
-                                    System.out.println("背包關上");
+
+                                    if(selectStr.equals("use")){
+                                        boolean bo = newPlayer.use(selectInt);
+                                        if(bo){
+                                            System.out.println("成功使用");
+                                            break;
+                                        }
+                                        if(!bo){
+                                            System.out.println("此道具無法使用");
+                                            break;
+                                        }
+                                    }else if(selectStr.equals("status")){
+                                        newPlayer.getBag().get(selectInt - 1).printItem();
+                                        break;
+                                    }
                                 }
                                 System.out.println("還想用道具!? 認命戰鬥吧");
                                 fight.startFight(newPlayer, animal);
@@ -369,7 +412,6 @@ public class Rpg {
                     System.out.println("1.繼續冒險");
                     System.out.println("2.顯示角色狀態 + 顯示裝備");
                     System.out.println("3.打開背包");
-
                     int choose;
 
                     try {
@@ -391,6 +433,7 @@ public class Rpg {
                         case 3:
                             if(newPlayer.getBag().size() == 0){
                                 System.out.println("背包裡面空空如也");
+                                System.out.println();
                                 break;
                             }
                             System.out.println();
@@ -404,28 +447,44 @@ public class Rpg {
                             System.out.println("1~" + newPlayer.getBag().size() +
                                     " use = 使用道具1~" +
                                     newPlayer.getBag().size());
-                            System.out.println("輸入exit離開");
+                            System.out.println("輸入exit 來關閉背包");
+                            System.out.println("(ex.裕顯示背包中第1個道具的功能，請打：1 status)");
 
+                            String selectIntNum;
+                            String selectStr;
 
-                            System.out.println("請先選擇哪個道具 不使用就輸入0");
-                            int selectInt = sc.nextInt();
-                            System.out.println("顯示道具功能請輸入:status\n"
-                                    + "使用道具請輸入:use\n"
-                                    + "輸入exit離開");
-                            String selectStr = sc.next();
-
-                            if(selectStr.equals("use")){
-                                boolean bo = newPlayer.use(selectInt);
-                                if(bo){
-                                    System.out.println("使用成功");
+                            while (true) {
+                                sc = new Scanner(System.in);
+                                selectIntNum = sc.next();
+                                if(selectIntNum.equals("exit")) {
+                                    break;
                                 }
-                                if(!bo){
-                                    System.out.println("此道具無法使用");
+
+                                selectStr = sc.next();
+
+                                int selectInt;
+
+                                try {
+                                    selectInt = Integer.parseInt(selectIntNum);
+                                } catch (NumberFormatException e) {
+                                    System.out.println("輸入錯了喔!\n請參照ex，先打裕選擇的道具在背包的第幾個，再打1個空格，再打執行的功能喔！");
+                                    continue;
                                 }
-                            }else if(selectStr.equals("status")){
-                                newPlayer.getBag().get(selectInt - 1).printItem();
-                            }else if(selectStr.equals("exit")){
-                                break;
+
+                                if(selectStr.equals("use")){
+                                    boolean bo = newPlayer.use(selectInt);
+                                    if(bo){
+                                        System.out.println("成功使用");
+                                        break;
+                                    }
+                                    if(!bo){
+                                        System.out.println("此道具無法使用");
+                                        break;
+                                    }
+                                }else if(selectStr.equals("status")){
+                                    newPlayer.getBag().get(selectInt - 1).printItem();
+                                    break;
+                                }
                             }
                             break;
                         default:
@@ -492,17 +551,7 @@ public class Rpg {
                         System.out.println("遇到 " + demon.ability.getName() + " 雙方大眼瞪小眼 你要逃跑嗎? ");
                         Thread.sleep(1500);
                         System.out.println("選擇1：逃跑\n" + "選擇2：戰鬥\n" + "選擇3：使用道具 ");
-
-                        int choose;
-
-                        try {
-                            choose =  sc.nextInt();
-                        } catch (InputMismatchException e) {
-                            System.out.println("沒有這個功能啦!快回去重選!");
-                            sc.next();
-                            continue;
-                        }  // 防呆(抓取可能輸入非數字的錯誤)
-
+                        int choose = sc.nextInt();
                         switch (choose){
                             case 1:
                                 System.out.println("你選擇逃跑");
@@ -530,25 +579,53 @@ public class Rpg {
                                 System.out.println();
                                 newPlayer.supply();
                                 System.out.println();
-                                System.out.println("請先選擇哪個道具 不使用就輸入0");
-                                int selectInt = sc.nextInt();
-                                System.out.println("顯示道具功能請輸入:status\n"
-                                        + "使用道具請輸入:use\n"
-                                        + "輸入exit離開");
-                                String selectStr = sc.next();
+                                System.out.println("背包說明：");
+                                System.out.println("1~" + newPlayer.getBag().size() +
+                                        " status = 顯示道具功能 1~" +
+                                        newPlayer.getBag().size());
+                                System.out.println("1~" + newPlayer.getBag().size() +
+                                        " use = 使用道具1~" +
+                                        newPlayer.getBag().size());
+                                System.out.println("輸入exit 來關閉背包");
+                                System.out.println("(ex.裕顯示背包中第1個道具的功能，請打：1 status)");
 
-                                if(selectStr.equals("use")){
-                                    boolean bo = newPlayer.use(selectInt);
-                                    if(bo){
-                                        System.out.println("成功使用");
+                                String selectIntNum;
+                                String selectStr;
+
+                                while (true) {
+                                    sc = new Scanner(System.in);
+                                    selectIntNum = sc.next();
+                                    if(selectIntNum.equals("exit")) {
+                                        System.out.println("背包關上!");
+                                        break;
                                     }
-                                    if(!bo){
-                                        System.out.println("此道具無法使用");
+
+                                    selectStr = sc.next();
+
+                                    int selectInt;
+                                    System.out.println();
+
+                                    try {
+                                        selectInt = Integer.parseInt(selectIntNum);
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("輸入錯了喔!\n請參照ex，先打裕選擇的道具在背包的第幾個，再打1個空格，再打執行的功能喔！");
+                                        continue;
                                     }
-                                }else if(selectStr.equals("status")){
-                                    newPlayer.getBag().get(selectInt - 1).printItem();
-                                }else if(selectStr.equals("exit")){
-                                    System.out.println("背包關上");
+
+                                    if(selectStr.equals("use")){
+                                        boolean bo = newPlayer.use(selectInt);
+                                        if(bo){
+                                            System.out.println("成功使用");
+                                            break;
+                                        }
+                                        if(!bo){
+                                            System.out.println("此道具無法使用");
+                                            break;
+                                        }
+                                    }else if(selectStr.equals("status")){
+                                        newPlayer.getBag().get(selectInt - 1).printItem();
+                                        break;
+                                    }
                                 }
                                 System.out.println("還想用道具!? 認命戰鬥吧");
                                 fight.startFight(newPlayer, demon);
@@ -640,7 +717,7 @@ public class Rpg {
     public static int Random (int min, int max){
         return (int)(Math.random() * (max - min + 1) + min);
     }
-    public static Weapon chooseWeapon() throws InterruptedException {
+    public static Weapon chooseWeapon(){
         //選擇起始武器（調用初始武器的ArrayList)
         Scanner sc = new Scanner(System.in);
         System.out.println("請選擇一個武器");
@@ -664,7 +741,6 @@ public class Rpg {
         weaponList.add(w3);
 
         System.out.print("選擇->");
-
         int chooseW;
 
         while (true) {
@@ -682,8 +758,9 @@ public class Rpg {
                 System.out.println("恭喜你獲得傳說之劍!\n...才怪沒有這個武器啦!快回去重選!");
             }
         }
+
     } //選擇武器
-    public static Armor chooseArmor() {
+    public static Armor chooseArmor(){
         //選擇起始防具（調用初始防具的ArrayList)
         Scanner sc = new Scanner(System.in);
         System.out.println("請選擇一個防具");
@@ -708,8 +785,8 @@ public class Rpg {
         armorList.add(a3);
 
         System.out.print("選擇->");
-        int chooseA;
 
+        int chooseA;
         while (true) {
             try {
                 chooseA = sc.nextInt();
@@ -724,5 +801,6 @@ public class Rpg {
                 System.out.println("恭喜你獲得傳說之盾!\n...才怪沒有這個防具啦!快回去重選!");
             }
         }
+
     } //選擇防具
 }
