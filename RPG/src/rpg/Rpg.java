@@ -25,30 +25,51 @@ public class Rpg {
         //角色命名
         Player newPlayer = new Player();
         
-        System.out.println("歡迎進入遊戲");
-        System.out.print("請輸入角色名稱->");
+        System.out.println("歡迎進入這個冒險國度");
+        Thread.sleep(1500);
+        System.out.print("請告訴我你的名字是?  ->");
+        Thread.sleep(1500);
         String name = sc.next();
         newPlayer.getAbility().setName(name);
-        System.out.println("你好 " + newPlayer.getAbility().getName());
+        System.out.println("你好 " + newPlayer.getAbility().getName() + " 請享受你的冒險");
+        Thread.sleep(1500);
+        System.out.println("這是一點小心意 希望對你有幫助");
+        Thread.sleep(1500);
         System.out.println();
-//        System.out.println(newPlayer); 
-        newPlayer.wearWeapon(chooseWeapon()); //穿上武器
-        
-        newPlayer.wearArmor(chooseArmor()); //穿上防具
 
-        
+        newPlayer.wearWeapon(chooseWeapon()); //穿上武器
+        newPlayer.wearArmor(chooseArmor()); //穿上防具
+        System.out.println();
+        System.out.println();
+        System.out.println("~~~請享受你的冒險~~~");
+        Thread.sleep(1500);
+        System.out.println();
+        System.out.println();
+
         int kindCount = 0; //過關的地圖數
         while(true){
             //地圖選擇（隨機）
             int kind = Random(1, 2);
 //            kind = 1;// 測試用
-                    
+            if(newPlayer.isDead()){
+                System.out.println("===你已重生 再接再厲!===");
+                Thread.sleep(1500);
+                System.out.println();
+                System.out.println();
+            }
+
             switch (kind){
                 case 1:
-                    System.out.println("進入地圖：森林");
+                    System.out.println("你已進入地圖：森林~ 暗藏危險動物");
+                    Thread.sleep(1500);
+                    System.out.println();
+                    System.out.println();
                     break;
                 case 2:
-                    System.out.println("進入地圖：深淵");
+                    System.out.println("你已進入地圖：深淵~ 有著奇怪的惡魔盤據");
+                    Thread.sleep(1500);
+                    System.out.println();
+                    System.out.println();
                     break;
             }
             if(newPlayer.isDead()){
@@ -57,6 +78,8 @@ public class Rpg {
                 newPlayer.ability.setName(name);
                 newPlayer.wearWeapon(chooseWeapon()); //穿上武器
                 newPlayer.wearArmor(chooseArmor()); //穿上防具
+                System.out.println();
+                System.out.println();
         
             }
             
@@ -77,6 +100,7 @@ public class Rpg {
                     int choose =  sc.nextInt();
                     switch (choose){
                         case 1:
+                            System.out.println();
                             System.out.println("深入森林冒險" );
                             break;
                         case 2:
@@ -87,7 +111,10 @@ public class Rpg {
                                 System.out.println("背包裡面空空如也");
                                 break;
                             }
+                            System.out.println();
+                            System.out.println();
                             newPlayer.supply();
+                            System.out.println();
                             System.out.println("背包說明：");
                             System.out.println("1~" + newPlayer.getBag().size() + 
                                     " status = 顯示道具功能 1~" + 
@@ -98,7 +125,7 @@ public class Rpg {
                             System.out.println("輸入exit離開");
                             
                             
-                            System.out.println("請選擇道具 不使用就輸入0");
+                            System.out.println("請先選擇哪個道具 不使用就輸入0");
                             int selectInt = sc.nextInt();
                             System.out.println("顯示道具功能請輸入:status\n"
                                     + "使用道具請輸入:use\n"
@@ -128,9 +155,11 @@ public class Rpg {
                 //Boss戰
                 if (newPlayer.getPositon() == 5){
                     System.out.println("遇到Boss !");
+                    Thread.sleep(1500);
                     Animal boss = new Animal();
                     boss.elephant();
                     System.out.println("Boss是" + boss.ability.getName() + "!" );
+                    Thread.sleep(1500);
                     fight.startFight(newPlayer, boss);
                     
                     if(newPlayer.isDead()){
@@ -141,7 +170,16 @@ public class Rpg {
                     kind = 2; //切換到另一張地圖
                     newPlayer.setPositon(0);//步數重算
                     if(kindCount == 1){
+                        System.out.println("你已征服這個地圖");
+                        Thread.sleep(1500);
                         System.out.println("你將前往深淵!!!");
+                        Thread.sleep(1500);
+                        System.out.println();
+                        System.out.println();
+                        System.out.println("你已進入地圖：深淵~ 有著奇怪的惡魔盤據");
+                        Thread.sleep(1500);
+                        System.out.println();
+                        System.out.println();
                     }    
                     break;
                 }
@@ -152,8 +190,11 @@ public class Rpg {
 //                event = sc.nextInt();// 測試用
                 
                 switch (event){
-                    case 0://沒事發生 
+                    case 0://沒事發生
+                        System.out.println();
+                        System.out.println();
                         System.out.println("沒事發生，繼續走 ");
+                        Thread.sleep(1500);
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
                         System.out.println();
@@ -163,7 +204,8 @@ public class Rpg {
 //                        Animal animal = new Animal();
 //                        animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
                         Animal animal = monster.genAnimal();//隨機挑怪物
-                        System.out.println("遇到" + animal.ability.getName() + "要逃跑嗎？ ");
+                        System.out.println("遇到 " + animal.ability.getName() + " 雙方大眼瞪小眼 你要逃跑嗎? ");
+                        Thread.sleep(1500);
                         System.out.println("選擇1：逃跑\n" + "選擇2：戰鬥\n" + "選擇3：使用道具 "); 
                         int choose = sc.nextInt();       
                         switch (choose){
@@ -177,12 +219,23 @@ public class Rpg {
                                 }
                                 break;
                             case 2:
-                                System.out.println("你選擇戰鬥"); 
+                                System.out.println("你選擇拼了"); 
                                 fight.startFight(newPlayer, animal);
                                 break;
                             case 3:
+                                if(newPlayer.getBag().size() == 0){
+                                    System.out.println("背包裡面空空如也");
+                                    Thread.sleep(1500);
+                                    System.out.println("還想用道具!? 認命戰鬥吧");
+                                    Thread.sleep(1500);
+                                    fight.startFight(newPlayer, animal);
+                                    break;
+                                }
+                                System.out.println();
+                                System.out.println();
                                 newPlayer.supply();
-                                System.out.println("請選擇道具 不使用就輸入0");
+                                System.out.println();
+                                System.out.println("請先選擇哪個道具 不使用就輸入0");
                                 int selectInt = sc.nextInt();
                                 System.out.println("顯示道具功能請輸入:status\n"
                                         + "使用道具請輸入:use\n"
@@ -219,7 +272,9 @@ public class Rpg {
                         
 //                        animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
                         Animal animal2 = monster.genAnimal();//隨機挑怪物
-                        System.out.println("遇到主動怪物" + animal2.ability.getName() + "不能逃跑！");
+                        System.out.println(animal2.ability.getName() + "主動攻擊你 逃不掉拉!");
+                        Thread.sleep(1500);
+                        System.out.println();
                         System.out.println("戰鬥開始"); 
                         fight.startFight(newPlayer, animal2);
                         
@@ -234,14 +289,20 @@ public class Rpg {
                     
                     
                     case 3: //遇到岔路
-                        System.out.println("遇到岔路 ");
+                        System.out.println();
+                        System.out.println();
+                        System.out.println("發現一個小叉路! 但看起來好恐怖 還是繼續往前吧 ");
+                        Thread.sleep(1500);
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
                         System.out.println();
                         break;
                     
                     case 4://遇到寶箱
-                        System.out.println("遇到寶箱!!! ");
+                        System.out.println();
+                        System.out.println();
+                        System.out.println("發現寶箱!!! ");
+                        Thread.sleep(1500);
                         ArrayList<Item> treasureList1 = new ArrayList<Item>();
                         Item healingPotion = new Item();
                         healingPotion.healingPotion();
@@ -256,6 +317,9 @@ public class Rpg {
                         treasureList1.add(bow);
                         
                         newPlayer.getItem(treasureList1.get(Random(0, 2)));
+                        Thread.sleep(1500);
+                        System.out.println();
+                        
                         
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
@@ -285,6 +349,7 @@ public class Rpg {
                     int choose =  sc.nextInt();
                     switch (choose){
                         case 1:
+                            System.out.println();
                             System.out.println("深入深淵冒險" );
                             break;
                         case 2:
@@ -295,7 +360,10 @@ public class Rpg {
                                 System.out.println("背包裡面空空如也");
                                 break;
                             }
+                            System.out.println();
+                            System.out.println();
                             newPlayer.supply();
+                            System.out.println();
                             System.out.println("背包說明：");
                             System.out.println("1~" + newPlayer.getBag().size() + 
                                     " status = 顯示道具功能 1~" + 
@@ -306,7 +374,7 @@ public class Rpg {
                             System.out.println("輸入exit離開");
                             
                             
-                            System.out.println("請選擇道具 不使用就輸入0");
+                            System.out.println("請先選擇哪個道具 不使用就輸入0");
                             int selectInt = sc.nextInt();
                             System.out.println("顯示道具功能請輸入:status\n"
                                     + "使用道具請輸入:use\n"
@@ -335,9 +403,11 @@ public class Rpg {
                 //Boss戰
                 if (newPlayer.getPositon() == 5){
                     System.out.println("遇到Boss !");
+                    Thread.sleep(1500);
                     Demon boss = new Demon();
                     boss.bahamut();
                     System.out.println("Boss是" + boss.ability.getName() + "!" );
+                    Thread.sleep(1500);
                     fight.startFight(newPlayer, boss);
                     
                     if(newPlayer.isDead()){
@@ -348,7 +418,16 @@ public class Rpg {
                     kind = 1; //切換到另一張地圖
                     newPlayer.setPositon(0);//步數重算
                     if(kindCount == 1){
+                        System.out.println("你已征服這個地圖");
+                        Thread.sleep(1500);
                         System.out.println("你將前往森林!!!");
+                        Thread.sleep(1500);
+                        System.out.println();
+                        System.out.println();
+                        System.out.println("你已進入地圖：森林~ 暗藏危險動物");
+                        Thread.sleep(1500);
+                        System.out.println();
+                        System.out.println();
                     }
                     break;
                 }
@@ -357,8 +436,11 @@ public class Rpg {
                 int event = Random(0, 4);
 //                event = sc.nextInt();// 測試用
                 switch (event){
-                    case 0://沒事發生 
+                    case 0://沒事發生
+                        System.out.println();
+                        System.out.println();
                         System.out.println("沒事發生，繼續走 ");
+                        Thread.sleep(1500);
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
                         System.out.println();
@@ -371,7 +453,8 @@ public class Rpg {
 //                        Animal animal = new Animal();
 //                        animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
                         Demon demon = monster.genDemon();//隨機挑怪物
-                        System.out.println("遇到" + demon.ability.getName() + "要逃跑嗎？ ");
+                        System.out.println("遇到 " + demon.ability.getName() + " 雙方大眼瞪小眼 你要逃跑嗎? ");
+                        Thread.sleep(1500);
                         System.out.println("選擇1：逃跑\n" + "選擇2：戰鬥\n" + "選擇3：使用道具 "); 
                         int choose = sc.nextInt();       
                         switch (choose){
@@ -385,12 +468,23 @@ public class Rpg {
                                 }
                                 break;
                             case 2:
-                                System.out.println("你選擇戰鬥"); 
+                                System.out.println("你選擇拼了"); 
                                 fight.startFight(newPlayer, demon);
                                 break;
                             case 3:
+                                if(newPlayer.getBag().size() == 0){
+                                    System.out.println("背包裡面空空如也");
+                                    Thread.sleep(1500);
+                                    System.out.println("還想用道具!? 認命戰鬥吧");
+                                    Thread.sleep(1500);
+                                    fight.startFight(newPlayer, demon);
+                                    break;
+                                }
+                                System.out.println();
+                                System.out.println();
                                 newPlayer.supply();
-                                System.out.println("請選擇道具 不使用就輸入0");
+                                System.out.println();
+                                System.out.println("請先選擇哪個道具 不使用就輸入0");
                                 int selectInt = sc.nextInt();
                                 System.out.println("顯示道具功能請輸入:status\n"
                                         + "使用道具請輸入:use\n"
@@ -429,7 +523,9 @@ public class Rpg {
                         
 //                        animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
                         Demon demon2 = monster.genDemon();//隨機挑怪物
-                        System.out.println("遇到主動怪物" + demon2.ability.getName() + "不能逃跑！");
+                        System.out.println(demon2.ability.getName() + "主動攻擊你 逃不掉拉!");
+                        Thread.sleep(1500);
+                        System.out.println();
                         System.out.println("戰鬥開始"); 
                         fight.startFight(newPlayer, demon2);
                         
@@ -444,7 +540,10 @@ public class Rpg {
                         break;    
                     
                     case 3: //遇到岔路
-                        System.out.println("遇到岔路 ");
+                        System.out.println();
+                        System.out.println();
+                        System.out.println("發現一個小叉路! 但看起來好恐怖 還是繼續往前吧 ");
+                        Thread.sleep(1500);
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
                         System.out.println();
@@ -452,7 +551,10 @@ public class Rpg {
                         break;
                     
                     case 4://遇到寶箱
-                        System.out.println("遇到寶箱!!! ");
+                        System.out.println();
+                        System.out.println();
+                        System.out.println("發現寶箱!!! ");
+                        Thread.sleep(1500);
                         ArrayList<Item> treasureList2 = new ArrayList<Item>();
                         Item healingPotion = new Item();
                         healingPotion.healingPotion();
@@ -467,6 +569,8 @@ public class Rpg {
                         treasureList2.add(defenseIncreasePotion);
                         
                         newPlayer.getItem(treasureList2.get(Random(0, 2)));
+                        Thread.sleep(1500);
+                        System.out.println();
                         
                         newPlayer.goOneStep();
                         System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
