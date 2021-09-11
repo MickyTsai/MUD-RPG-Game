@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="43f91d24-192c-4f04-aca5-132f5f0e870a" name="Default" comment="將Boss從一般怪物清單剔除">
+    <list default="true" id="43f91d24-192c-4f04-aca5-132f5f0e870a" name="Default" comment="#更新防呆">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RPG/src/rpg/Rpg.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG/src/rpg/Rpg.java" afterDir="false" />
     </list>
@@ -202,7 +202,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631285961453</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="#更新防呆">
+      <created>1631324062112</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1631324062112</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -277,7 +284,8 @@
     <MESSAGE value="fix 掉落物處理" />
     <MESSAGE value="1.fix Animal&#10;2.修改Monster中的Animals &amp; demons&#10;3.修改怪物掉落物清單" />
     <MESSAGE value="將Boss從一般怪物清單剔除" />
-    <option name="LAST_COMMIT_MESSAGE" value="將Boss從一般怪物清單剔除" />
+    <MESSAGE value="#更新防呆" />
+    <option name="LAST_COMMIT_MESSAGE" value="#更新防呆" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/RPG/src/rpg/Player.java">
