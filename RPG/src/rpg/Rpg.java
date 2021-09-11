@@ -163,6 +163,7 @@ public class Rpg {
                             }else if(selectStr.equals("exit")){
                                break; 
                             }
+                            break;
                         default:
                             System.out.println("沒有這個功能啦!快回去重來!");    
                     }
@@ -437,6 +438,7 @@ public class Rpg {
                             }else if(selectStr.equals("exit")){
                                break; 
                             }
+                            break;
                         default:
                             System.out.println("沒有這個功能啦!快回去重來!");    
                     }
