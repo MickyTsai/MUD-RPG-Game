@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="43f91d24-192c-4f04-aca5-132f5f0e870a" name="Default" comment="#更新防呆">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RPG/src/rpg/Rpg.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG/src/rpg/Rpg.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RPG/src/rpg/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG/src/rpg/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,7 +209,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631324062112</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="#更新防呆">
+      <created>1631325370778</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1631325370778</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
