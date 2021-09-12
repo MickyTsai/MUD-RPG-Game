@@ -107,14 +107,20 @@ public class Player extends Character {
             Item item = bag.get(choose - 1);     //背包裡的那個東西
             if (item.isPermanentBuff()) { //先判斷是否為永久型buff型道具
                 buffList.add(item);
+                System.out.println("成功使用");
+                System.out.println(item.getUseage());
                 bag.remove(choose - 1);
                 isOk = true;
             } else if (item.getBuffTime() > 0 && isFighting) { //判斷是否為戰鬥中使用的buff道具
                 buffList.add(item);
+                System.out.println("成功使用");
+                System.out.println(item.getUseage());
                 bag.remove(choose - 1);
                 isOk = true;
             } else if (item.getUseable()) {   //其他種道具使用
                 getAbility().merge(item.ability);
+                System.out.println("成功使用");
+                System.out.println(item.getUseage());
                 bag.remove(item);
                 isOk = true;
             } else if (item.isArmor()) {
@@ -145,24 +151,24 @@ public class Player extends Character {
     }
 
     public void buffCountDown() {  //buff倒數 (不管永久性buff)
-        for (Item items : buffList) {
-            if (!items.isPermanentBuff()) {
-                items.reduceBuffTime();
+        for (int i = 0; i < buffList.size(); i++) {
+            if (!buffList.get(i).isPermanentBuff()) {
+                buffList.get(i).reduceBuffTime();
             }
-            if (items.getBuffTime() == 0) {
-                getAbility().unMerge(items.ability); //復原狀態
-                buffList.remove(items); //至buff列表移除
+            if (buffList.get(i).getBuffTime() == 0) {
+                getAbility().unMerge(buffList.get(i).ability); //復原狀態
+                buffList.remove(buffList.get(i--)); //至buff列表移除 //用i--才不會出錯
             }
         }
     }
 
     public void removeBuff() {
-        for (Item item : buffList) {
-            if (!item.isPermanentBuff()) {
-                getAbility().unMerge(item.ability);  //復原狀態
-                buffList.remove(item); //至buff列表移除
+        for (int i = 0; i < buffList.size(); i++) {
+            if (!buffList.get(i).isPermanentBuff()) {
+                getAbility().unMerge(buffList.get(i).ability);  //復原狀態
+                buffList.remove(buffList.get(i--)); //至buff列表移除
             } else {
-                getAbility().unMerge(item.ability); //永久性buff只會復原狀態不移除
+                getAbility().unMerge(buffList.get(i).ability); //永久性buff只會復原狀態不移除
             }
         }
     }

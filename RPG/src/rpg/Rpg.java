@@ -46,12 +46,17 @@ public class Rpg {
         Thread.sleep(1500);
         System.out.println();
         System.out.println();
-
+        
+        int kind = 0;
+//        kind = 1;// 測試用
         int kindCount = 0; //過關的地圖數
         while(true){
-            //地圖選擇（隨機）
-            int kind = Random(1, 2);
-//            kind = 1;// 測試用
+            //如果初始進入 地圖選擇隨機
+            if (kind == 0){
+                kind = Random(1, 2);
+            }
+            
+//          
             if(newPlayer.isDead()){
                 System.out.println("===你已重生 再接再厲!===");
                 Thread.sleep(1500);
@@ -135,7 +140,7 @@ public class Rpg {
                             System.out.println("輸入exit 來關閉背包");
                             
                             
-                            System.out.println("請先選擇哪個道具 不使用就輸入0");
+                            System.out.println("請先選擇哪個道具(輸入數字) 不使用就輸入0");
                             int selectInt = sc.nextInt();
                             System.out.println();
                             
@@ -152,9 +157,7 @@ public class Rpg {
                             
                             if(selectStr.equals("use")){
                                 boolean bo = newPlayer.use(selectInt);
-                                if(bo){
-                                   System.out.println("成功使用"); 
-                                }
+                                //使用成功的訊息輸出已有寫在use方法 故只輸出 失敗使用
                                 if(!bo){
                                    System.out.println("此道具無法使用"); 
                                 }
@@ -197,10 +200,7 @@ public class Rpg {
                         Thread.sleep(1500);
                         System.out.println();
                         System.out.println();
-                        System.out.println("你已進入地圖：深淵~ 有著奇怪的惡魔盤據");
-                        Thread.sleep(1500);
-                        System.out.println();
-                        System.out.println();
+                        
                     }    
                     break;
                 }
@@ -208,7 +208,7 @@ public class Rpg {
                 
                 //事件
                 int event = Random(0, 4);
-//                event = sc.nextInt();// 測試用
+//                event = sc.nextInt();// 測試用
                 
                 switch (event){
                     case 0://沒事發生
@@ -222,19 +222,18 @@ public class Rpg {
                         break;
                         
                     case 1://遇到被動怪物 要先抓出怪物
-//                        Animal animal = new Animal();
-//                        animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
                         Animal animal = monster.genAnimal();//隨機挑怪物
                         System.out.println("遇到 " + animal.ability.getName() + " 雙方大眼瞪小眼 你要逃跑嗎? ");
                         Thread.sleep(1500);
                         System.out.println("選擇1：逃跑\n" + "選擇2：戰鬥\n" + "選擇3：使用道具 "); 
+                        newPlayer.setFighting(true);//因為道具效果需要戰鬥狀態才能用 角色狀態先切入為：戰鬥
                         int choose = sc.nextInt();
-                        
                         switch (choose){
                             case 1:
                                 System.out.println("你選擇逃跑");
                                 if(fight.isEscaping(newPlayer, animal)){
                                     System.out.println("逃跑成功");
+                                    newPlayer.setFighting(false);//角色狀態切回為：非戰鬥
                                 }else{
                                     System.out.println("逃跑失敗 開始戰鬥");
                                     fight.startFight(newPlayer, animal);
@@ -257,7 +256,7 @@ public class Rpg {
                                 System.out.println();
                                 newPlayer.supply();
                                 System.out.println();
-                                System.out.println("請先選擇哪個道具 不使用就輸入0");
+                                System.out.println("請先選擇哪個道具(輸入數字) 不使用就輸入0");
                                 int selectInt = sc.nextInt();
                                 System.out.println();
                                 if(selectInt == 0){
@@ -272,9 +271,7 @@ public class Rpg {
 
                                 if(selectStr.equals("use")){
                                     boolean bo = newPlayer.use(selectInt);
-                                    if(bo){
-                                        System.out.println("成功使用"); 
-                                    }
+                                    //使用成功的訊息輸出已有寫在use方法 故只輸出 失敗使用
                                     if(!bo){
                                         System.out.println("此道具無法使用"); 
                                     }
@@ -297,8 +294,6 @@ public class Rpg {
                         break;
                         
                     case 2://遇到主動怪物
-                        
-//                        animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
                         Animal animal2 = monster.genAnimal();//隨機挑怪物
                         System.out.println(animal2.ability.getName() + "主動攻擊你 逃不掉拉!");
                         Thread.sleep(1500);
@@ -412,7 +407,7 @@ public class Rpg {
                             System.out.println("輸入exit 來關閉背包");
                             
                             
-                            System.out.println("請先選擇哪個道具 不使用就輸入0");
+                            System.out.println("請先選擇哪個道具(輸入數字) 不使用就輸入0");
                             int selectInt = sc.nextInt();
                             System.out.println();
                             if(selectInt == 0){
@@ -427,9 +422,7 @@ public class Rpg {
                             
                             if(selectStr.equals("use")){
                                 boolean bo = newPlayer.use(selectInt);
-                                if(bo){
-                                   System.out.println("使用成功"); 
-                                }
+                                //使用成功的訊息輸出已有寫在use方法 故只輸出 失敗使用
                                 if(!bo){
                                    System.out.println("此道具無法使用"); 
                                 }
@@ -471,17 +464,14 @@ public class Rpg {
                         Thread.sleep(1500);
                         System.out.println();
                         System.out.println();
-                        System.out.println("你已進入地圖：森林~ 暗藏危險動物");
-                        Thread.sleep(1500);
-                        System.out.println();
-                        System.out.println();
+                        
                     }
                     break;
                 }
                 
                 //事件
                 int event = Random(0, 4);
-//                event = sc.nextInt();// 測試用
+//                event = sc.nextInt();// 測試用
                 switch (event){
                     case 0://沒事發生
                         System.out.println();
@@ -497,18 +487,18 @@ public class Rpg {
                         
                         
                     case 1://遇到被動怪物 要先抓出怪物
-//                        Animal animal = new Animal();
-//                        animal = monster.getAnimals().get(Random(0, 3));//隨機挑怪物
                         Demon demon = monster.genDemon();//隨機挑怪物
                         System.out.println("遇到 " + demon.ability.getName() + " 雙方大眼瞪小眼 你要逃跑嗎? ");
                         Thread.sleep(1500);
                         System.out.println("選擇1：逃跑\n" + "選擇2：戰鬥\n" + "選擇3：使用道具 "); 
+                        newPlayer.setFighting(true);//因為道具效果需要戰鬥狀態才能用 角色狀態先切入為：戰鬥
                         int choose = sc.nextInt();       
                         switch (choose){
                             case 1:
                                 System.out.println("你選擇逃跑");
                                 if(fight.isEscaping(newPlayer, demon)){
                                     System.out.println("逃跑成功");
+                                    newPlayer.setFighting(false);//戰鬥狀態切回：非戰鬥
                                 }else{
                                     System.out.println("逃跑失敗 開始戰鬥");
                                     fight.startFight(newPlayer, demon);
@@ -531,7 +521,7 @@ public class Rpg {
                                 System.out.println();
                                 newPlayer.supply();
                                 System.out.println();
-                                System.out.println("請先選擇哪個道具 不使用就輸入0");
+                                System.out.println("請先選擇哪個道具(輸入數字) 不使用就輸入0");
                                 int selectInt = sc.nextInt();
                                 System.out.println();
                                 if(selectInt == 0){
@@ -546,9 +536,7 @@ public class Rpg {
 
                                 if(selectStr.equals("use")){
                                     boolean bo = newPlayer.use(selectInt);
-                                    if(bo){
-                                        System.out.println("成功使用"); 
-                                    }
+                                    //使用成功的訊息輸出已有寫在use方法 故只輸出 失敗使用
                                     if(!bo){
                                         System.out.println("此道具無法使用"); 
                                     }
