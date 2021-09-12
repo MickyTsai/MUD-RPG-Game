@@ -145,7 +145,7 @@ public class Rpg {
                             String selectStr;
 
                             while (true) {
-                                sc = new Scanner(System.in);
+                                sc.nextLine();  // 先清除scannar中的\n
                                 selectIntNum = sc.next();
                                 if(selectIntNum.equals("exit")) {
                                     break;
@@ -160,6 +160,11 @@ public class Rpg {
                                     selectInt = Integer.parseInt(selectIntNum);
                                 } catch (NumberFormatException e) {
                                     System.out.println("輸入錯了喔!\n請參照ex，先打裕選擇的道具在背包的第幾個，再打1個空格，再打執行的功能喔！");
+                                    continue;
+                                }
+
+                                if (selectInt < 1 || selectInt > newPlayer.getBag().size()) {
+                                    System.out.println("恭喜獲得隱藏版道具!\n...才怪沒有這個東西啦!\n快去重新輸入!");
                                     continue;
                                 }
 
@@ -286,7 +291,7 @@ public class Rpg {
                                 String selectStr;
 
                                 while (true) {
-                                    sc = new Scanner(System.in);
+                                    sc.nextLine();  // 先清除scannar中的\n
                                     selectIntNum = sc.next();
                                     if(selectIntNum.equals("exit")) {
                                         System.out.println("背包關上!");
@@ -302,7 +307,11 @@ public class Rpg {
                                         selectInt = Integer.parseInt(selectIntNum);
                                     } catch (NumberFormatException e) {
                                         System.out.println("輸入錯了喔!\n請參照ex，先打裕選擇的道具在背包的第幾個，再打1個空格，再打執行的功能喔！");
-                                        sc.nextLine();
+                                        continue;
+                                    }
+
+                                    if (selectInt < 1 || selectInt > newPlayer.getBag().size()) {
+                                        System.out.println("恭喜獲得隱藏版道具!\n...才怪沒有這個東西啦!\n快去重新輸入!");
                                         continue;
                                     }
 
@@ -454,7 +463,7 @@ public class Rpg {
                             String selectStr;
 
                             while (true) {
-                                sc = new Scanner(System.in);
+                                sc.nextLine();  // 先清除scannar中的\n
                                 selectIntNum = sc.next();
                                 if(selectIntNum.equals("exit")) {
                                     break;
@@ -468,6 +477,11 @@ public class Rpg {
                                     selectInt = Integer.parseInt(selectIntNum);
                                 } catch (NumberFormatException e) {
                                     System.out.println("輸入錯了喔!\n請參照ex，先打裕選擇的道具在背包的第幾個，再打1個空格，再打執行的功能喔！");
+                                    continue;
+                                }
+
+                                if (selectInt < 1 || selectInt > newPlayer.getBag().size()) {
+                                    System.out.println("恭喜獲得隱藏版道具!\n...才怪沒有這個東西啦!\n快去重新輸入!");
                                     continue;
                                 }
 
@@ -593,7 +607,7 @@ public class Rpg {
                                 String selectStr;
 
                                 while (true) {
-                                    sc = new Scanner(System.in);
+                                    sc.nextLine();  // 先清除scannar中的\n
                                     selectIntNum = sc.next();
                                     if(selectIntNum.equals("exit")) {
                                         System.out.println("背包關上!");
@@ -609,6 +623,11 @@ public class Rpg {
                                         selectInt = Integer.parseInt(selectIntNum);
                                     } catch (NumberFormatException e) {
                                         System.out.println("輸入錯了喔!\n請參照ex，先打裕選擇的道具在背包的第幾個，再打1個空格，再打執行的功能喔！");
+                                        continue;
+                                    }
+
+                                    if (selectInt < 1 || selectInt > newPlayer.getBag().size()) {
+                                        System.out.println("恭喜獲得隱藏版道具!\n...才怪沒有這個東西啦!\n快去重新輸入!");
                                         continue;
                                     }
 

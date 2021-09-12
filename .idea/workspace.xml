@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="43f91d24-192c-4f04-aca5-132f5f0e870a" name="Default" comment="#更新">
+    <list default="true" id="43f91d24-192c-4f04-aca5-132f5f0e870a" name="Default" comment="#更新背包輸入方法與防呆">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RPG/src/rpg/Rpg.java" beforeDir="false" afterPath="$PROJECT_DIR$/RPG/src/rpg/Rpg.java" afterDir="false" />
     </list>
@@ -223,7 +223,14 @@
       <option name="project" value="LOCAL" />
       <updated>1631325594050</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="#更新背包輸入方法與防呆">
+      <created>1631352634731</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1631352634731</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TodoView">
@@ -300,7 +307,8 @@
     <MESSAGE value="將Boss從一般怪物清單剔除" />
     <MESSAGE value="#更新防呆" />
     <MESSAGE value="#更新" />
-    <option name="LAST_COMMIT_MESSAGE" value="#更新" />
+    <MESSAGE value="#更新背包輸入方法與防呆" />
+    <option name="LAST_COMMIT_MESSAGE" value="#更新背包輸入方法與防呆" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MUD_RPG_Game$Rpg.ic" NAME="Rpg Coverage Results" MODIFIED="1631330346046" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
