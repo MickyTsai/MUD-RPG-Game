@@ -81,6 +81,7 @@ public class Item {
         return this.price;
     }
 
+
     public void healingPotion() {
         ability.setName("治療藥水");
         setUseable(true);

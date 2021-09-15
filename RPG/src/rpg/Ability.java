@@ -12,10 +12,30 @@ public class Ability {
     private int itemMaxmum = 0;
     private int weaponMaxmum = 0;
     private int armorMaxmum = 0;
-    private int con = 0;
-    private int equipmentWeight = 0;
+    private int con = 0; //負重
+    private int equipmentWeight = 0; //角色目前裝備總重
     private int maxExp = 0;
     private String name;
+    //以下第二週新增
+    private int intelli;
+    private int migDef;
+
+    public int getIntelli() {
+        return intelli;
+    }
+
+    public void setIntelli(int intelli) {
+        this.intelli = intelli;
+    }
+
+    public int getMigDef() {
+        return migDef;
+    }
+
+    public void setMigDef(int migDef) {
+        this.migDef = migDef;
+    }
+    //以上第二週新增
 
     public String getName() {
         return name;

@@ -10,6 +10,9 @@ public class Player extends Character {
     private ArrayList<Item> buffList = new ArrayList<Item>();
     private int positon;
     private boolean isFighting = false;
+    //以下第二週新增
+    private int price;
+    //以上第二週新增
 
     public Player() {
         Ability initialAbility = new Ability();
@@ -27,6 +30,8 @@ public class Player extends Character {
         initialAbility.setMaxExp(10);
         setAbility(initialAbility);
         positon = 0;  //起始位置在原點
+
+
     }
 
     public void lvelUp() {

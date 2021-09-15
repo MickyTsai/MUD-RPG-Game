@@ -11,7 +11,7 @@ public class Animal extends Monster {
 
     public void wolf() {
         ability.setName("狼");
-        ability.setHp(3);
+        ability.setHp(20);
         ability.setStr(6);
         ability.setDef(3);
         ability.setHit(5);
@@ -25,7 +25,7 @@ public class Animal extends Monster {
 
     public void lion() {
         ability.setName("獅子");
-        ability.setHp(4);
+        ability.setHp(20);
         ability.setStr(7);
         ability.setDef(4);
         ability.setHit(5);
@@ -39,7 +39,7 @@ public class Animal extends Monster {
 
     public void boar() {
         ability.setName("山豬");
-        ability.setHp(6);
+        ability.setHp(20);
         ability.setStr(5);
         ability.setDef(7);
         ability.setHit(4);

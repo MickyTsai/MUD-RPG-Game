@@ -5,13 +5,25 @@ import java.util.Random;
 public class Fight {
     private Random random = new Random();
     int round = 0;
+    //以下第二週新增
+    private boolean isEscap = false;
+
+    public boolean isEscap() {
+        return isEscap;
+    }
+
+    public void setEscap(boolean escap) {
+        isEscap = escap;
+    }
+    //以上第二週新增
+
 
     public boolean isEscaping(Player player, Monster monster) { //是否逃跑成功
-        boolean isEscape = false;
+        setEscap(false);
         if (random.nextDouble() <= (player.getAbility().getDex() - monster.getAbility().getDex()) * 0.4) { //(自身敏捷-怪物敏捷)*40%為逃跑率
-            isEscape = true;
+            setEscap(true);
         }
-        return isEscape;
+        return isEscap();
     }
 
     public void startFight(Player player, Monster monster) throws InterruptedException {  //戰鬥開始
@@ -19,7 +31,7 @@ public class Fight {
         player.buffTakeEffect(monster); //buff生效
         if (player.getAbility().getDex() >= monster.getAbility().getDex()) { //判斷誰敏捷高誰先攻擊
             System.out.println(player.getAbility().getName() + "先攻");
-            while (!player.isDead() && !monster.isDead()) {//沒有人死的話會一直打下去
+//            while (!player.isDead() && !monster.isDead()) {//沒有人死的話會一直打下去
                 round++;
                 System.out.println("\n第" + round + "回合");
                 System.out.println(player.getAbility().getName() + "攻擊!");
@@ -29,10 +41,10 @@ public class Fight {
                     attack(monster, player);
                 }
                 player.buffCountDown(); //玩家buff扣除一回合
-            }
+//            }
         } else {
             System.out.println(monster.getAbility().getName() + "先攻");
-            while (!player.isDead() && !monster.isDead()) {
+//            while (!player.isDead() && !monster.isDead()) {
                 round++;
                 System.out.println("\n第" + round + "回合");
                 System.out.println(monster.getAbility().getName() + "攻擊!");
@@ -42,12 +54,12 @@ public class Fight {
                     attack(player, monster);
                 }
                 player.buffCountDown();
-            }
+//            }
         }
-        round = 0;//round 歸零
-        player.removeBuff(); //buff移除
-        player.setFighting(false); //離開戰鬥狀態
-        overFight(player, monster); //結算
+//        round = 0;//round 歸零 //第二週：移到overFight內
+//        player.removeBuff(); //buff移除 //第二週：移到overFight內
+//        player.setFighting(false); //離開戰鬥狀態 //第二週：移到overFight內
+//        overFight(player, monster); //結算
     }
 
     public boolean isHit(Character atker, Character defer) {
@@ -82,6 +94,9 @@ public class Fight {
     }
 
     public void overFight(Player player, Monster monster) throws InterruptedException {
+        round = 0;//round 歸零
+        player.removeBuff(); //buff移除
+        player.setFighting(false); //離開戰鬥狀態
         if (player.isDead()) {
             System.out.println("你死了QQ，請重新來過吧\n\n");
         } else {
