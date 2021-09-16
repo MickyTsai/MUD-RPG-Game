@@ -197,6 +197,10 @@ public class Ability {
         hit += value;
     }
 
+    public void addIntelli(int value) {
+        intelli += value;
+    }
+
     public void addExp(int value) {
         exp += value;
     }
@@ -213,13 +217,17 @@ public class Ability {
         LV++;
     }
 
+
+
     public String toString() {
         return "各項素質:\n" +
                 "血量(當前/最大): " + getHp() + "/" + getMaxHp() + "\n" +
                 "力量: " + getStr() + "\n" +
+                "智慧: " + getIntelli() + "\n" +
                 "敏捷: " + getDex() + "\n" +
                 "命中: " + getHit() + "\n" +
-                "防禦: " + getDef() + "\n";
+                "防禦: " + getDef() + "\n" +
+                "魔法防禦: " + getMigDef() + "\n";
     }
 
     public void merge(Ability newAbility) {
@@ -229,6 +237,8 @@ public class Ability {
             hp = maxHp;
         }
         str += newAbility.str;
+        intelli += newAbility.intelli;
+        migDef += newAbility.migDef;
         dex += newAbility.dex;
         def += newAbility.def;
         hit += newAbility.hit;
@@ -239,6 +249,8 @@ public class Ability {
     public void unMerge(Ability newAbility) {
         hp -= newAbility.hp;
         str -= newAbility.str;
+        intelli -= newAbility.intelli;
+        migDef -= newAbility.migDef;
         dex -= newAbility.dex;
         def -= newAbility.def;
         hit -= newAbility.hit;

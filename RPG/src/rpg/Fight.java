@@ -3,6 +3,7 @@ package rpg;
 import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Fight {
     private Random random = new Random();
@@ -40,6 +41,7 @@ public class Fight {
 
             while (true){
                 round++;
+                int playerSkills = 3;
                 System.out.println("\n=====第" + round + "回合=====");
                 //角色先攻 選擇普通攻擊 還是技能
                 System.out.println("請選擇：\n" +
@@ -52,8 +54,25 @@ public class Fight {
                     System.out.println("沒有這個功能啦!快回去重來!");
                     sc.next();
                     continue;
-                }  // 防呆(抓取可能輸入非數字的錯誤)
-
+                }  // 防呆(抓取可能輸入非數字的錯誤
+                int whichSkill=0;
+                for(int i = 0 ; i < playerSkills; i++){
+                    if(i == whichSkill-1){
+                        continue;
+                    }
+                    else{
+                        int a = player.getAbility().getSkill().get(i).getCdTime();
+                        int b = player.getAbility().getSkill().get(i).getInitCdTime();
+                        if( a != b ){
+                            if( a == -1 ){
+                                player.getAbility().getSkill().get(i).resetCdTime();
+                            }
+                            else{
+                                player.getAbility().getSkill().get(i).addCdTime(-1);
+                            }
+                        }
+                    }
+                }
                 switch (choose){
                     case 1:
                         //普通攻擊
@@ -69,18 +88,47 @@ public class Fight {
                         }
                     case 2:
                         //技能攻擊
-                        System.out.println("請選擇技能");
-                        int whichSkill=sc.nextInt();;
-                        System.out.println(player.getAbility().getName() + "施放" + "技能");
-                        skillAttack(player, monster, whichSkill);
+                        System.out.println("請輸入技能編號選擇技能");
+                        //week2 判斷技能冷卻時間
+                        boolean allCd = true;
+                        ArrayList<Integer> skillSet = new ArrayList<Integer>();
+                        //判斷印出目前可選的技能
+                        for(int i=0;i<playerSkills;i++){
+                            if(player.getAbility().getSkill().get(i).getCdTime()==player.getAbility().getSkill().get(i).getInitCdTime()){
+                                System.out.println("編號"+(i+1)+player.getAbility().getSkill().get(i).getName());
+                                skillSet.add(i+1);
+                                allCd = false;
+                            }
+                            else{
+                                int cdRound = player.getAbility().getSkill().get(i).getCdTime();
+                                System.out.println("編號"+(i+1)+player.getAbility().getSkill().get(i).getName()+"(冷卻回合:)"+(cdRound+2));
+                            }
+                        }
+                        if(allCd==true){
+                            System.out.println("全部技能CD中，無法使用任何技能");
+                        }
+                        else{
+                            // int whichSkill;
+                            boolean containSkill;
+                            do{
+                                whichSkill = sc.nextInt();
+                                containSkill = skillSet.contains(whichSkill);
+                            }
+                            while(containSkill==false);
 
-
+                            System.out.println(player.getAbility().getName() + "施放" + "技能");
+                            skillAttack(player, monster, whichSkill);
+                        }
                         if (!monster.isDead()) {  //怪物死了就不用繼續打下去
                             System.out.println(monster.getAbility().getName() + "攻擊!");
                             attack(monster, player);
                             break;
                         }else{
                             System.out.println("怪物判定死亡正常");
+                            // reset 技能cd時間
+                            for(int i = 0 ; i < playerSkills; i++){
+                                player.getAbility().getSkill().get(i).resetCdTime();
+                            }
                             break;
                         }
                     default:
@@ -95,19 +143,18 @@ public class Fight {
             }
 
 
-
         } else {
             System.out.println("== " + monster.getAbility().getName() + " 先攻=="); //怪物先攻
+            int playerSkills = 3;
 
+            while (true){
+                round++;
+                System.out.println("\n=====第" + round + "回合=====");
+                System.out.println(monster.getAbility().getName() + "攻擊!");
+                attack(monster, player);
 
-                while (true){
-                    round++;
-                    System.out.println("\n=====第" + round + "回合=====");
-                    System.out.println(monster.getAbility().getName() + "攻擊!");
-                    attack(monster, player);
-
-                    //角色後攻且沒死 選擇普通攻擊 還是技能
-                    if (!player.isDead()) {
+                //角色後攻且沒死 選擇普通攻擊 還是技能
+                if (!player.isDead()) {
                     System.out.println("請選擇：\n" +
                             "1.普通攻擊\n" +
                             "2.技能選擇");
@@ -119,6 +166,24 @@ public class Fight {
                         sc.next();
                         continue;
                     }  // 防呆(抓取可能輸入非數字的錯誤)
+                    int whichSkill=0;
+                    for(int i = 0 ; i < playerSkills; i++){
+                        if(i == whichSkill-1){
+                            continue;
+                        }
+                        else{
+                            int a = player.getAbility().getSkill().get(i).getCdTime();
+                            int b = player.getAbility().getSkill().get(i).getInitCdTime();
+                            if( a != b ){
+                                if( a == -1 ){
+                                    player.getAbility().getSkill().get(i).resetCdTime();
+                                }
+                                else{
+                                    player.getAbility().getSkill().get(i).addCdTime(-1);
+                                }
+                            }
+                        }
+                    }
 
                     switch (choose){
                         case 1:
@@ -136,9 +201,34 @@ public class Fight {
 
                         case 2:
                             //技能攻擊
-                            System.out.println("請選擇技能");
-                            int whichSkill=sc.nextInt();;
-
+                            System.out.println("請輸入技能編號選擇技能");
+                            //week2 判斷技能冷卻時間
+                            boolean allCd = true;
+                            ArrayList<Integer> skillSet = new ArrayList<Integer>();
+                            //判斷印出目前可選的技能
+                            for(int i=0;i<playerSkills;i++){
+                                if(player.getAbility().getSkill().get(i).getCdTime()==player.getAbility().getSkill().get(i).getInitCdTime()){
+                                    System.out.println("編號"+(i+1)+player.getAbility().getSkill().get(i).getName());
+                                    skillSet.add(i+1);
+                                    allCd = false;
+                                }
+                                else{
+                                    int cdRound = player.getAbility().getSkill().get(i).getCdTime();
+                                    System.out.println("編號"+(i+1)+player.getAbility().getSkill().get(i).getName()+"(冷卻回合:)"+(cdRound+2));
+                                }
+                            }
+                            if(allCd==true){
+                                System.out.println("全部技能CD中，無法使用任何技能");
+                            }
+                            else{
+                                // int whichSkill;
+                                boolean containSkill;
+                                do{
+                                    whichSkill = sc.nextInt();
+                                    containSkill = skillSet.contains(whichSkill);
+                                }
+                                while(containSkill==false);
+                            }
                             System.out.println(player.getAbility().getName() + "施放" + "技能");
                             skillAttack(player, monster, whichSkill);
 
@@ -150,6 +240,9 @@ public class Fight {
                                 break;
                             }else{
                                 System.out.println("怪物判定死亡正常");
+                                for(int i = 0 ; i < playerSkills; i++){
+                                    player.getAbility().getSkill().get(i).resetCdTime();
+                                }
                                 break;
                             }
 
@@ -186,14 +279,15 @@ public class Fight {
             if (damage > 0) { //判定傷害是否>0
                 defer.getAbility().addHp(damage * (-1)); //扣血(+負的血量)
                 Thread.sleep(1500);
-                System.out.println(atker.getAbility().getName() + "對" + defer.getAbility().getName() + "造成了" + damage + "傷害\n");
+                System.out.println(atker.getAbility().getName() + "對" + defer.getAbility().getName() + "造成了" + damage + "傷害\n" +
+                        defer.getAbility().getName() + " 剩下 " + defer.getAbility().getHp() + "HP \n");
                 if (defer.isDead()) { //死亡就跳出
                     return;
                 }
             } else {
                 Thread.sleep(1500);
                 defer.getAbility().addHp(-1);
-                System.out.println("被擋下來了，只扣一滴\n");  //被擋下，也有一滴傷害
+                System.out.println("被擋下來了，只扣一滴 剩下" + defer.getAbility().getHp() + "HP \n");  //被擋下，也有一滴傷害
                 if (defer.isDead()) { //死亡就跳出
                     return;
                 }
@@ -232,13 +326,15 @@ public class Fight {
             if(whichSkill!=0){ //玩家指定技能
                 damage = atker.getAbility().getSkill().get(whichSkill - 1).doItEffect(atker.getAbility().getSkill().get(whichSkill - 1).getId(), atker) - defer.getAbility().getDef();
                 System.out.println(atker.getAbility().getSkill().get(whichSkill - 1).getName());
+                //冷卻時間--
+                atker.getAbility().getSkill().get(whichSkill-1).addCdTime(-1);
             }
             else{ //怪物觸發技能
                 if(atker.getAbility().getSkill().size()==1){ //只有一項技能
                     // random num<機率
                     int randomNum = random.nextInt((100 - 1) + 1) + 1;
-                    if(randomNum<atker.getAbility().getSkill().get(1).getProbability()){ //技能觸發
-                        damage = atker.getAbility().getSkill().get(1).doItEffect(atker.getAbility().getSkill().get(0).getId(), atker) - defer.getAbility().getDef();
+                    if(randomNum<atker.getAbility().getSkill().get(0).getProbability()){ //技能觸發
+                        damage = atker.getAbility().getSkill().get(0).doItEffect(atker.getAbility().getSkill().get(0).getId(), atker) - defer.getAbility().getDef();
                         System.out.println(atker.getAbility().getSkill().get(0).getName());
                     }
                     else{ //普攻
@@ -270,7 +366,7 @@ public class Fight {
             } else {
                 Thread.sleep(1500);
                 defer.getAbility().addHp(-1);
-                System.out.println("被擋下來了，只扣一滴\n");  //被擋下，也有一滴傷害
+                System.out.println("被擋下來了，只扣一滴  剩下" + defer.getAbility().getHp() + "HP \n");  //被擋下，也有一滴傷害
                 if (defer.isDead()) { //死亡就跳出
                     return;
                 }

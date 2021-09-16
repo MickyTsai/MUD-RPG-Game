@@ -5,6 +5,7 @@ public class Skill {
     private SkillName name; //技能名字
     private int probability; //技能施放機率
     private int cdTime; //冷卻時間
+    private int initCdTime; //初始冷卻時間
     private int level; //等級
 
     public enum SkillName{
@@ -163,6 +164,7 @@ public class Skill {
     }
     public void setCdTime(int cdTime){
         this.cdTime=cdTime;
+        this.initCdTime=cdTime;
     }
     public void setLevel(int level){
         this.level = level;
@@ -179,8 +181,17 @@ public class Skill {
     public int getCdTime(){
         return cdTime;
     }
+    public int getInitCdTime(){
+        return initCdTime;
+    }
     public int getLevel(){
         return level;
+    }
+    public void addCdTime(int num){
+        cdTime+=num;
+    }
+    public void resetCdTime(){
+        cdTime = initCdTime;
     }
 }
 

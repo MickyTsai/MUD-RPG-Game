@@ -22,9 +22,6 @@ public class Rpg {
         Fight fight = new Fight();
         Monster monster = new Monster();
 
-
-
-
         //角色命名
         Player newPlayer = new Player();
         
@@ -56,7 +53,7 @@ public class Rpg {
         while(true){
             //如果初始進入 地圖選擇隨機
             if (kind == 0){
-                kind = Random(1, 2);
+                kind = Random(1, 3);
             }
             
 //          
@@ -81,7 +78,7 @@ public class Rpg {
                     System.out.println();
                     break;
                 case 3:
-                    System.out.println("你已進入地圖：煉獄地圖~ 有惡魔也有奇怪動物～我們懷念你");
+                    System.out.println("你已進入地圖：煉獄地圖~ 有惡魔也有動物的party～我們懷念你");
                     Thread.sleep(1500);
                     System.out.println();
                     System.out.println();
@@ -104,7 +101,7 @@ public class Rpg {
             
             
             //進入地圖
-            while (kindCount < 3){
+            while (true){
                 
                 while(true){
                     if(newPlayer.isDead()){
@@ -146,16 +143,7 @@ public class Rpg {
                             newPlayer.supply();
                             System.out.println();
                             System.out.println("背包說明：");
-                            System.out.println("1~" + newPlayer.getBag().size() +
-                                    " status = 顯示道具功能 1~" +
-                                    newPlayer.getBag().size());
-                            System.out.println("1~" + newPlayer.getBag().size() +
-                                    " use = 使用道具1~" +
-                                    newPlayer.getBag().size());
-                            System.out.println("輸入exit 來關閉背包");
-
-
-                            System.out.println("請先選擇哪個道具(輸入數字) 不使用就輸入0");
+                            System.out.println("請先選擇哪個道具(輸入數字)1~" + + newPlayer.getBag().size() +"不使用就輸入0");
                             int selectInt = sc.nextInt();
                             System.out.println();
 
@@ -239,11 +227,12 @@ public class Rpg {
                         }
                     }
 
+
                     if(newPlayer.isDead()){
                         break;
                     }
                     kindCount++; //沒死＝勝利 
-                    kind = 2; //隨機切換到另一張地圖 （尚未處理）
+                    kind = 1; //隨機切換到另一張地圖 （尚未處理）
                     newPlayer.setPositon(0);//步數重算
                     if(kindCount < 3){
                         System.out.println("你已征服這個地圖");
@@ -269,15 +258,14 @@ public class Rpg {
                         break;
                         
                     case 1://遇到被動怪物 要先抓出怪物
-                        Monster monsterCase1;
+                        Monster monsterCase1 = new Monster();
                         if (kind == 1){
                             monsterCase1 = monster.genAnimal();//森林 隨機挑怪物
                         }else if (kind == 2) {
                             monsterCase1 = monster.genDemon();//深淵 隨機挑怪物
                         }else if (kind == 3){
-                            monsterCase1 = monster.genDemon();//煉獄森林 隨機挑怪物（尚未處理）
+                            monsterCase1 = monsterCase1.monsterList().get(0);//煉獄森林 隨機挑怪物
                         }else{
-                            monsterCase1 = monster.genAnimal();//預設狀況 （森林 隨機挑怪物）
                             System.out.println("被動怪事件 抓取怪物出現錯誤");
                         }
 
@@ -321,7 +309,7 @@ public class Rpg {
                         }
 
 
-                        System.out.println(monsterCase2.ability.getName() + "主動攻擊你 逃不掉拉!");
+                        System.out.println(monsterCase2.ability.getName() + "跑來攻擊你 逃不掉拉!");
                         Thread.sleep(1500);
                         System.out.println();
                         System.out.println("戰鬥開始");
@@ -429,17 +417,44 @@ public class Rpg {
                         System.out.println();
                         break;
                     case 5:
+                        Shop shop = new Shop();
                         System.out.println("遇到流浪商人 ");
-
-                        Shop shop= new Shop();
-                        shop.printAllItem();
-                        shop.buy(newPlayer);
-
                         Thread.sleep(1500);
-                        newPlayer.goOneStep();
-                        System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
-                        System.out.println();
-                        break;
+                        boolean tf = true;
+                        while (tf) {
+                            System.out.println("選擇行動");
+                            System.out.println("1.買商品");
+                            System.out.println("2.賣商品");
+                            System.out.println("3.離開");
+                            int choose;
+                            try {
+                                choose = sc.nextInt();
+                            } catch (InputMismatchException e) {
+                                System.out.println("沒有這個功能啦!快回去重來!");
+                                sc.next();
+                                continue;
+                            }  // 防呆(抓取可能輸入非數字的錯誤)
+                            Thread.sleep(1500);
+                            switch (choose) {
+                                case 1:
+                                    shop.printAllItem();
+                                    shop.buy(newPlayer);
+                                    break;
+                                case 2:
+                                    shop.sell(newPlayer);
+                                    break;
+                                case 3:
+                                    tf = false;
+                                    newPlayer.goOneStep();
+                                    System.out.println("你已經走了 " + newPlayer.getPositon() + " 步");
+                                    System.out.println();
+                                    break;
+                                //加了避免要求皆不符合，而無break
+                                default:
+                                    System.out.println("商人事件發生錯誤 ");
+                                    break;
+                            }
+                        }
                     default:
                         System.out.println("事件發生錯誤 ");
                         break;
@@ -580,7 +595,7 @@ public class Rpg {
                 System.out.println();
                 newPlayer.supply();
                 System.out.println();
-                System.out.println("請先選擇哪個道具(輸入數字) 不使用就輸入0");
+                System.out.println("請先選擇哪個道具(輸入數字)1~" + + newPlayer.getBag().size() +"不使用就輸入0");
                 int selectInt = sc.nextInt();
                 System.out.println();
                 if(selectInt == 0){
