@@ -14,6 +14,8 @@ public class Armor extends Item {
         ability.setEquipmentWeight(10);
         this.setInitial(true);
         ability.setName("木甲");
+        ability.setMigDef(2);
+
     }
 
     public void chainMail() {
@@ -21,6 +23,7 @@ public class Armor extends Item {
         ability.setEquipmentWeight(15);
         this.setInitial(true);
         ability.setName("鎖子甲");
+        ability.setMigDef(-1);
     }
 
     public void plateArmor() {
@@ -28,6 +31,7 @@ public class Armor extends Item {
         ability.setEquipmentWeight(20);
         this.setInitial(true);
         ability.setName("板甲");
+        ability.setMigDef(-3);
     }
 
     public void leatherArmor() {
@@ -35,6 +39,7 @@ public class Armor extends Item {
         ability.setEquipmentWeight(9);
         this.setInitial(false);
         ability.setName("皮甲");
+        ability.setMigDef(1);
     }
 
     public void setInitial(boolean initial) {
@@ -48,6 +53,7 @@ public class Armor extends Item {
     public void printItem() {
         System.out.println("名稱:" + this.ability.getName()
                 + "\t防禦力:" + this.ability.getDef()
-                + "\t重量:" + this.ability.getEquipmentWeight());
+                + "\t重量:" + this.ability.getEquipmentWeight()
+                + "\t魔法防禦力:" + this.ability.getMigDef());
     }
 }

@@ -1,5 +1,5 @@
 package rpg;
-
+import java.util.ArrayList;
 public class Ability {
     private int maxHp = 0;
     private int hp = 0;
@@ -12,31 +12,44 @@ public class Ability {
     private int itemMaxmum = 0;
     private int weaponMaxmum = 0;
     private int armorMaxmum = 0;
-    private int con = 0; //負重
-    private int equipmentWeight = 0; //角色目前裝備總重
+    private int con = 0;
+    private int equipmentWeight = 0;
     private int maxExp = 0;
     private String name;
-    //以下第二週新增
-    private int intelli;
-    private int migDef;
+    private int migDef =0; //week2 add 魔法防禦
+    private int intelli =0; //week2 add 智慧
+    private ArrayList<Skill> skill = new ArrayList<Skill>(); //week2 技能陣列
 
-    public int getIntelli() {
-        return intelli;
+
+    public void setSkill(int id, int name, double probability, int cdTime, int level){
+        Skill newSkill = new Skill();
+        newSkill.setId(id);
+        newSkill.setName(name);
+        newSkill.setProbability(probability);
+        newSkill.setCdTime(cdTime);
+        newSkill.setLevel(level);
+        skill.add(newSkill);
+    }
+    public ArrayList<Skill> getSkill(){
+        return skill;
     }
 
-    public void setIntelli(int intelli) {
-        this.intelli = intelli;
+    //week2 setMightDef
+    public void setMigDef(int migDef) {
+        this.migDef=migDef;
     }
-
+    //week2 getMigDef
     public int getMigDef() {
         return migDef;
     }
-
-    public void setMigDef(int migDef) {
-        this.migDef = migDef;
+    //week2 setIntelli
+    public void setIntelli(int intelli) {
+        this.intelli=intelli;
     }
-    //以上第二週新增
-
+    //week2 getIntelli
+    public int getIntelli() {
+        return intelli;
+    }
     public String getName() {
         return name;
     }
