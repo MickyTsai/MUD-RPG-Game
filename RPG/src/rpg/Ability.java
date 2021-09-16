@@ -18,10 +18,11 @@ public class Ability {
     private String name;
     private int migDef =0; //week2 add 魔法防禦
     private int intelli =0; //week2 add 智慧
+    private int money=0;
     private ArrayList<Skill> skill = new ArrayList<Skill>(); //week2 技能陣列
 
 
-    public void setSkill(int id, int name, double probability, int cdTime, int level){
+    public void setSkill( int id, int name, int probability, int cdTime, int level){
         Skill newSkill = new Skill();
         newSkill.setId(id);
         newSkill.setName(name);
@@ -198,6 +199,14 @@ public class Ability {
 
     public void addExp(int value) {
         exp += value;
+    }
+
+    public void setMoney(int money) {
+        this.money=money;
+    }
+
+    public int getMoney() {
+        return money;
     }
 
     public void lvUp() {

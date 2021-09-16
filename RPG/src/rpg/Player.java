@@ -25,9 +25,10 @@ public class Player extends Character {
         initialAbility.setCon(10 * initialAbility.getStr());
         initialAbility.setLV(1);
         initialAbility.setMaxExp(10);
-        initialAbility.setSkill( 8, 6, 1, 5, 2);
-        initialAbility.setSkill( 9, 7, 1, 2, 1);
-        initialAbility.setSkill( 10, 9, 1, 3, 1);
+        initialAbility.setSkill( 1, 6, 1, 5, 2);
+        initialAbility.setSkill( 2, 7, 1, 2, 1);
+        initialAbility.setSkill( 3, 9, 1, 3, 1);
+        initialAbility.setMoney(0);
         setAbility(initialAbility);
         positon = 0;  //起始位置在原點
     }
@@ -238,6 +239,6 @@ public class Player extends Character {
     public String toString() {
         return "名字: " + getAbility().getName() + "\n" + "等級: " + getAbility().getLV() + "   " +
                 "經驗值(當前/最大):" + getAbility().getExp() + "/" + getAbility().getMaxExp() + "\n" +
-                getAbility();
+                getAbility()+"錢包:"+getAbility().getMoney();
     }
 }
