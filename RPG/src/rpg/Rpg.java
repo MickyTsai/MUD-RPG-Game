@@ -48,7 +48,7 @@ public class Rpg {
 
 
         int kind = 0;
-        kind = 1;// 測試用
+        kind = 3;// 測試用
         int kindCount = 0; //過關的地圖數
         while(true){
             //如果初始進入 地圖選擇隨機
@@ -95,8 +95,6 @@ public class Rpg {
                 newPlayer.wearArmor(chooseArmor()); //穿上防具
                 System.out.println();
                 System.out.println();
-            }else{
-                System.out.println("判定角色是否活著功能正常"); //測試用
             }
             
             
@@ -106,9 +104,8 @@ public class Rpg {
                 while(true){
                     if(newPlayer.isDead()){
                         break;
-                    }else{
-                        System.out.println("判定角色是否活著功能正常"); //測試用
                     }
+
                     System.out.println("選擇行動");
                     System.out.println("1.繼續冒險");
                     System.out.println("2.顯示角色狀態 + 顯示裝備");
@@ -275,17 +272,17 @@ public class Rpg {
 //                        Thread.sleep(1500);
                         while(true){
                             chooseOnFight(newPlayer, monsterCase1, fight); //戰鬥選擇
-                            if(monsterCase1.isDead() || newPlayer.isDead()){ //怪物或角色一方死亡
-                                fight.overFight(newPlayer, monsterCase1);
-                                break;
-                            }else if(fight.isEscap()){ //逃跑成功
+                            //怪物或角色一方死亡 或逃跑成功 脫離戰鬥迴圈
+                            if(monsterCase1.isDead() || newPlayer.isDead() || fight.isEscap()){
                                 break;
                             }else{
                                 System.out.println("戰鬥選擇功能正常");
                             }
                         }
+                        //如果結束戰鬥迴圈是因為死亡 後方步數不計算
                         if(newPlayer.isDead()){
                             break;
+                        //如果結束戰鬥迴圈是因為逃跑成功或殺死怪物 步數＋＋
                         }else{
                             System.out.println("角色判定是否存活功能正常");
                         }
@@ -314,19 +311,31 @@ public class Rpg {
                         System.out.println();
                         System.out.println("戰鬥開始");
                         fight.startFight(newPlayer, monsterCase2);
+                        if(newPlayer.isDead()){
+                            //如果遇到主動怪 怪先攻 第一次攻擊就被怪物殺死 後面迴圈不進入
+                            break;
+                        }else if(monsterCase2.isDead()) {
+                            //如果遇到主動怪 角色先攻 第一次攻擊就將怪物殺死 後面迴圈不進入
+                            //因為打贏 步數要計算
+                            newPlayer.goOneStep();
+                            System.out.println("你已經走了 " + newPlayer.getPositon() + " 步" );
+                            System.out.println();
+                            break;
+                        }
+
                         while(true){
                             chooseOnFight(newPlayer, monsterCase2, fight); //戰鬥選擇
-                            if(monsterCase2.isDead() || newPlayer.isDead()){ //怪物或角色一方死亡
-                                fight.overFight(newPlayer, monsterCase2);
-                                break;
-                            }else if(fight.isEscap()){ //逃跑成功
+                            //怪物或角色一方死亡或逃跑成功 就結束戰鬥迴圈
+                            if(monsterCase2.isDead() || newPlayer.isDead() || fight.isEscap()) {
                                 break;
                             }else{
-                                System.out.println("戰鬥選擇功能正常");
+                                System.out.println("戰鬥選擇功能正常 戰鬥繼續");
                             }
                         }
+                        //如果結束戰鬥迴圈是因為死亡 後方步數不計算
                         if(newPlayer.isDead()){
                             break;
+                        //如果結束戰鬥迴圈是因為逃跑成功或殺死怪物 步數＋＋
                         }else{
                             System.out.println("角色判定是否存活功能正常");
                         }
@@ -455,9 +464,9 @@ public class Rpg {
                                     break;
                             }
                         }
-                    default:
-                        System.out.println("事件發生錯誤 ");
-                        break;
+//                    default:
+//                        System.out.println("事件發生錯誤 ");
+//                        break;
                 }
                 if(newPlayer.isDead()){
                     break;
