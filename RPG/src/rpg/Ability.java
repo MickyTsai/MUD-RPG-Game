@@ -22,13 +22,14 @@ public class Ability {
     private ArrayList<Skill> skill = new ArrayList<Skill>(); //week2 技能陣列
 
 
-    public void setSkill( int id, int name, int probability, int cdTime, int level){
+    public void setSkill( int id, int name, int probability, int cdTime, int level, String info){
         Skill newSkill = new Skill();
         newSkill.setId(id);
         newSkill.setName(name);
         newSkill.setProbability(probability);
         newSkill.setCdTime(cdTime);
         newSkill.setLevel(level);
+        newSkill.setInfo(info);
         skill.add(newSkill);
     }
     public ArrayList<Skill> getSkill(){
