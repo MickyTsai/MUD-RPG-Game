@@ -47,13 +47,15 @@ public class Rpg {
         System.out.println();
 
 
-        int kind = 0;
-        kind = 3;// 測試用
+        Kind[] kindList = new Kind[]{Kind.森林, Kind.深淵, Kind.煉獄森林};
+        Kind[] passKindList = new Kind[3];
+        Kind kind = Kind.森林;//預設地圖：森林
+//        kind = 3;// 測試用
         int kindCount = 0; //過關的地圖數
         while(true){
             //如果初始進入 地圖選擇隨機
-            if (kind == 0){
-                kind = Random(1, 3);
+            if (passKindList[0] == null){
+                kind = kindList[Random(0, 2)];
             }
             
 //          
@@ -65,20 +67,20 @@ public class Rpg {
             }
 
             switch (kind){
-                case 1:
+                case 森林:
                     System.out.println("你已進入地圖：森林~ 暗藏危險動物");
                     Thread.sleep(1500);
                     System.out.println();
                     System.out.println();
                     break;
-                case 2:
+                case 深淵:
                     System.out.println("你已進入地圖：深淵~ 有著奇怪的惡魔盤據");
                     Thread.sleep(1500);
                     System.out.println();
                     System.out.println();
                     break;
-                case 3:
-                    System.out.println("你已進入地圖：煉獄地圖~ 有惡魔也有動物的party～我們懷念你");
+                case 煉獄森林:
+                    System.out.println("你已進入地圖：煉獄森林~ 有惡魔也有動物的party～我們懷念你");
                     Thread.sleep(1500);
                     System.out.println();
                     System.out.println();
@@ -180,7 +182,7 @@ public class Rpg {
                     System.out.println("遇到Boss !");
                     Thread.sleep(1500);
 
-                    if (kind == 1){
+                    if (kind.equals(Kind.森林)){
                         Animal boss = new Animal();
                         boss.elephant();//森林Boss戰
                         System.out.println("Boss是" + boss.ability.getName() + "!" );
@@ -194,7 +196,7 @@ public class Rpg {
                                 System.out.println("戰鬥選擇功能正常");
                             }
                         }
-                    }else if (kind == 2) {//深淵Boss戰
+                    }else if (kind.equals(Kind.深淵)) {//深淵Boss戰
                         Demon boss = new Demon();
                         boss.bahamut();
                         System.out.println("Boss是" + boss.ability.getName() + "!" );
@@ -208,7 +210,7 @@ public class Rpg {
                                 System.out.println("戰鬥選擇功能正常");
                             }
                         }
-                    }else if (kind == 3){//煉獄森林Boss戰
+                    }else if (kind.equals(Kind.煉獄森林)){//煉獄森林Boss戰
                         Monster monsterKind3 = new Monster();
                         Monster boss = monsterKind3.bossList().get(Random(0,1));
                         System.out.println("Boss是" + boss.ability.getName() + "!" );
@@ -228,8 +230,16 @@ public class Rpg {
                     if(newPlayer.isDead()){
                         break;
                     }
-                    kindCount++; //沒死＝勝利 
-                    kind = 1; //隨機切換到另一張地圖 （尚未處理）
+                    passKindList[kindCount++] = kind; //將通關的地圖存進List
+                    while (true) {
+                        Kind tmp = kindList[Random(0, 2)];
+                        if (!tmp.equals(passKindList[0]) && !tmp.equals(passKindList[1])) {//再次隨機取地圖，但是必須不存在於List當中
+                            kind = tmp;
+                            break;
+                        }
+                    }
+
+
                     newPlayer.setPositon(0);//步數重算
                     if(kindCount < 3){
                         System.out.println("你已征服這個地圖");
@@ -241,7 +251,7 @@ public class Rpg {
 
                 //事件
                 int event = Random(0, 5);
-               event = sc.nextInt();// 測試用
+//               event = sc.nextInt();// 測試用
                 
                 switch (event){
                     case 0://沒事發生
@@ -256,11 +266,11 @@ public class Rpg {
                         
                     case 1://遇到被動怪物 要先抓出怪物
                         Monster monsterCase1 = new Monster();
-                        if (kind == 1){
+                        if (kind.equals(Kind.森林)){
                             monsterCase1 = monster.genAnimal();//森林 隨機挑怪物
-                        }else if (kind == 2) {
+                        }else if (kind.equals(Kind.深淵)) {
                             monsterCase1 = monster.genDemon();//深淵 隨機挑怪物
-                        }else if (kind == 3){
+                        }else if (kind.equals(Kind.煉獄森林)){
                             monsterCase1 = monsterCase1.monsterList().get(0);//煉獄森林 隨機挑怪物
                         }else{
                             System.out.println("被動怪事件 抓取怪物出現錯誤");
@@ -276,7 +286,7 @@ public class Rpg {
                             if(monsterCase1.isDead() || newPlayer.isDead() || fight.isEscap()){
                                 break;
                             }else{
-                                System.out.println("戰鬥選擇功能正常");
+//                                System.out.println("戰鬥選擇功能正常");
                             }
                         }
                         //如果結束戰鬥迴圈是因為死亡 後方步數不計算
@@ -284,7 +294,7 @@ public class Rpg {
                             break;
                         //如果結束戰鬥迴圈是因為逃跑成功或殺死怪物 步數＋＋
                         }else{
-                            System.out.println("角色判定是否存活功能正常");
+//                            System.out.println("角色判定是否存活功能正常");
                         }
 
                         newPlayer.goOneStep();
@@ -294,11 +304,11 @@ public class Rpg {
                         
                     case 2://遇到主動怪物
                         Monster monsterCase2;
-                        if (kind == 1){
+                        if (kind.equals(Kind.森林)){
                             monsterCase2 = monster.genAnimal();//森林 隨機挑怪物
-                        }else if (kind == 2) {
+                        }else if (kind.equals(Kind.深淵)) {
                             monsterCase2 = monster.genDemon();//深淵 隨機挑怪物
-                        }else if (kind == 3){
+                        }else if (kind.equals(Kind.煉獄森林)){
                             monsterCase2 = monster.genDemon();//煉獄森林 隨機挑怪物（尚未處理）
                         }else{
                             monsterCase2 = monster.genAnimal();//預設狀況 （森林 隨機挑怪物）
@@ -329,7 +339,7 @@ public class Rpg {
                             if(monsterCase2.isDead() || newPlayer.isDead() || fight.isEscap()) {
                                 break;
                             }else{
-                                System.out.println("戰鬥選擇功能正常 戰鬥繼續");
+//                                System.out.println("戰鬥選擇功能正常 戰鬥繼續");//測試用
                             }
                         }
                         //如果結束戰鬥迴圈是因為死亡 後方步數不計算
@@ -337,7 +347,7 @@ public class Rpg {
                             break;
                         //如果結束戰鬥迴圈是因為逃跑成功或殺死怪物 步數＋＋
                         }else{
-                            System.out.println("角色判定是否存活功能正常");
+//                            System.out.println("角色判定是否存活功能正常");//測試用
                         }
 
                         newPlayer.goOneStep();
@@ -363,7 +373,7 @@ public class Rpg {
                         Thread.sleep(1500);
                         ArrayList<Item> treasureList = new ArrayList<Item>(); //寶箱list
 
-                        if (kind == 1){ //森林寶箱list
+                        if (kind.equals(Kind.森林)){ //森林寶箱list
                             Item healingPotion = new Item();
                             healingPotion.healingPotion();
                             treasureList.add(healingPotion);
@@ -376,7 +386,7 @@ public class Rpg {
                             bow.bow();
                             treasureList.add(bow);
 
-                        }else if (kind == 2) {  //深淵寶箱list
+                        }else if (kind.equals(Kind.深淵)) {  //深淵寶箱list
                             Item healingPotion = new Item();
                             healingPotion.healingPotion();
                             treasureList.add(healingPotion);
@@ -389,7 +399,7 @@ public class Rpg {
                             defenseIncreasePotion.defenceIncreasePotion();
                             treasureList.add(defenseIncreasePotion);
 
-                        }else if (kind == 3){//煉獄森林寶箱list 先放森林的（尚未處理）
+                        }else if (kind.equals(Kind.煉獄森林)){//煉獄森林寶箱list 先放森林的（尚未處理）
                             Item healingPotion = new Item();
                             healingPotion.healingPotion();
                             treasureList.add(healingPotion);
@@ -464,9 +474,6 @@ public class Rpg {
                                     break;
                             }
                         }
-//                    default:
-//                        System.out.println("事件發生錯誤 ");
-//                        break;
                 }
                 if(newPlayer.isDead()){
                     break;
@@ -689,6 +696,11 @@ public class Rpg {
 
         }
 
+    }
+    public enum Kind {
+        森林,
+        深淵,
+        煉獄森林,
     }
 
 }

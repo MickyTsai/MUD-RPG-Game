@@ -59,7 +59,6 @@ public class Ability {
         this.name = name;
     }
 
-
     public int getMaxHp() {
         return maxHp;
     }
@@ -216,8 +215,6 @@ public class Ability {
     public void lvUp() {
         LV++;
     }
-
-
 
     public String toString() {
         return "各項素質:\n" +
