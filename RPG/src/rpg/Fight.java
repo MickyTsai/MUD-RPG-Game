@@ -102,16 +102,16 @@ public class Fight {
                         boolean allCd = true;
                         ArrayList<Integer> skillSet = new ArrayList<Integer>();
                         //判斷印出目前可選的技能
-                        for(int i=0; i<playerSkills; i++){
+                        for(int i=0; i < playerSkills; i++){
                             if(player.getAbility().getSkill().get(i).getCdTime()==player.getAbility().getSkill().get(i).getInitCdTime()){
-                                System.out.println(player.getAbility().getSkill().get(i).getName()+player.getAbility().getSkill().get(i).getInfo());
+                                System.out.println("編號"+(i+1)+" "+player.getAbility().getSkill().get(i).getName()+" "+player.getAbility().getSkill().get(i).getInfo());
                                 // System.out.println("編號"+(i+1)+player.getAbility().getSkill().get(i).getName());
                                 skillSet.add(i+1);
                                 allCd = false;
                             }
                             else{
                                 int cdRound = player.getAbility().getSkill().get(i).getCdTime();
-                                System.out.println(player.getAbility().getSkill().get(i).getName()+
+                                System.out.println("編號"+(i+1)+" "+player.getAbility().getSkill().get(i).getName()+" "+
                                         player.getAbility().getSkill().get(i).getInfo()+
                                         " (冷卻回合:)"+(cdRound+2));
                                 // System.out.println("編號"+(i+1)+player.getAbility().getSkill().get(i).getName()+"(冷卻回合:)"+(cdRound+2));
@@ -234,13 +234,13 @@ public class Fight {
                             //判斷印出目前可選的技能
                             for(int i=0;i<playerSkills;i++){
                                 if(player.getAbility().getSkill().get(i).getCdTime()==player.getAbility().getSkill().get(i).getInitCdTime()){
-                                    System.out.println("編號"+(i + 1 + ": ")+player.getAbility().getSkill().get(i).getName()+player.getAbility().getSkill().get(i).getInfo());
+                                    System.out.println("編號"+(i+1)+" "+player.getAbility().getSkill().get(i).getName()+" "+player.getAbility().getSkill().get(i).getInfo());
                                     skillSet.add(i+1);
                                     allCd = false;
                                 }
                                 else{
                                     int cdRound = player.getAbility().getSkill().get(i).getCdTime();
-                                    System.out.println(player.getAbility().getSkill().get(i).getName()+
+                                    System.out.println("編號"+(i+1)+" "+player.getAbility().getSkill().get(i).getName()+" "+
                                             player.getAbility().getSkill().get(i).getInfo()+
                                             " (冷卻回合:)"+(cdRound+2));
                                     // System.out.println("編號"+(i+1)+player.getAbility().getSkill().get(i).getName()+"(冷卻回合:)"+(cdRound+2));
@@ -340,10 +340,17 @@ public class Fight {
             player.removeBuff(); //buff移除
             player.setFighting(false); //離開戰鬥狀態
             System.out.println("你死了QQ，請重新來過吧\n\n");
+            for(int i = 0; i < 3; i++){
+                player.getAbility().getSkill().get(i).resetCdTime();
+            }
         }else if(monster.isDead()) {
             round = 0;//round 歸零
             player.removeBuff(); //buff移除
             player.setFighting(false); //離開戰鬥狀態
+
+            for(int i = 0; i < 3; i++){
+                player.getAbility().getSkill().get(i).resetCdTime();
+            }
 
             int exp = monster.getAbility().getExp();
             Thread.sleep(1500);

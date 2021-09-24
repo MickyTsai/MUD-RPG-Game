@@ -24,12 +24,12 @@ public class Player extends Character {
         initialAbility.setHit(5);
         initialAbility.setCon(10 * initialAbility.getStr());
         initialAbility.setLV(1);
-        initialAbility.setIntelli(5);
+        initialAbility.setIntelli(3);
         initialAbility.setMaxExp(10);
         initialAbility.setSkill( 6, 6, 1, 5, 2,"傷害: 智慧*2");
         initialAbility.setSkill( 7, 7, 1, 2, 1,"傷害: 智慧");
         initialAbility.setSkill( 9, 9, 1, 3, 1,"傷害: 智慧+2");
-        initialAbility.setMoney(10);
+        initialAbility.setMoney(0);
         setAbility(initialAbility);
         positon = 0;  //起始位置在原點
     }

@@ -29,7 +29,7 @@ public class Weapon extends Item {
         this.ability.setEquipmentWeight(7);
         this.setInitial(true);
         ability.setName("法杖");
-        this.ability.setIntelli(5);
+        this.ability.setIntelli(3);
     }
 
     public void bow() {

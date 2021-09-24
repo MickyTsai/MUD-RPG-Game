@@ -67,7 +67,7 @@ public class Demon extends Monster {
 
     public void bahamut() {
         ability.setName("巴哈姆特");
-        ability.setHp(7);
+        ability.setHp(17);
         ability.setStr(8);
         ability.setDef(4);
         ability.setHit(7);
