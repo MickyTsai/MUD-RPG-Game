@@ -192,7 +192,7 @@ public class Rpg {
                         while(true){ //boss戰鬥
                             chooseOnFightWithBoss(newPlayer, boss, fight);
                             if(boss.isDead() || newPlayer.isDead()){ //怪物或角色一方死亡
-                                fight.overFight(newPlayer, boss);
+//                                fight.overFight(newPlayer, boss);
                                 break;
                             }else{
                                 System.out.println("戰鬥選擇功能正常");
@@ -206,7 +206,7 @@ public class Rpg {
                         while(true){ //boss戰鬥
                             chooseOnFightWithBoss(newPlayer, boss, fight);
                             if(boss.isDead() || newPlayer.isDead()){ //怪物或角色一方死亡
-                                fight.overFight(newPlayer, boss);
+//                                fight.overFight(newPlayer, boss);
                                 break;
                             }else{
                                 System.out.println("戰鬥選擇功能正常");
@@ -220,7 +220,7 @@ public class Rpg {
                         while(true){ //boss戰鬥
                             chooseOnFightWithBoss(newPlayer, boss, fight);
                             if(boss.isDead() || newPlayer.isDead()){ //怪物或角色一方死亡
-                                fight.overFight(newPlayer, boss);
+//                                fight.overFight(newPlayer, boss);
                                 break;
                             }else{
                                 System.out.println("戰鬥選擇功能正常");
