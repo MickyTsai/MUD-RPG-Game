@@ -239,6 +239,12 @@ public class Player extends Character {
         printState();
         printEquipment();
     }
+    public void removeBag(int choose) {
+        if (choose <= bag.size()) {  //防呆
+            Item item = bag.get(choose - 1);
+            bag.remove(choose - 1);
+        }
+    }
 
     @Override
     public String toString() {
