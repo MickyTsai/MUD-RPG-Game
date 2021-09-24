@@ -10,9 +10,6 @@ public class Player extends Character {
     private ArrayList<Item> buffList = new ArrayList<Item>();
     private int positon;
     private boolean isFighting = false;
-    //以下第二週新增
-    private int price;
-    //以上第二週新增
 
     public Player() {
         Ability initialAbility = new Ability();
@@ -27,11 +24,14 @@ public class Player extends Character {
         initialAbility.setHit(5);
         initialAbility.setCon(10 * initialAbility.getStr());
         initialAbility.setLV(1);
+        initialAbility.setIntelli(3);
         initialAbility.setMaxExp(10);
+        initialAbility.setSkill( 6, 6, 1, 5, 2,"傷害: 智慧*2");
+        initialAbility.setSkill( 7, 7, 1, 2, 1,"傷害: 智慧");
+        initialAbility.setSkill( 9, 9, 1, 3, 1,"傷害: 智慧+2");
+        initialAbility.setMoney(10);
         setAbility(initialAbility);
         positon = 0;  //起始位置在原點
-
-
     }
 
     public void lvelUp() {
@@ -45,6 +45,7 @@ public class Player extends Character {
             getAbility().addMaxHp(2);   //各項素質提升
             getAbility().addHit(2);
             getAbility().addDef(2);
+            getAbility().addIntelli(2);
             getAbility().setHp(getAbility().getMaxHp());  //血量全滿
             System.out.println("所有素質提升");
             printState();
@@ -105,6 +106,12 @@ public class Player extends Character {
             System.out.println("輸入錯誤");
         }
     }
+    public void removeBag(int choose) {
+        if (choose <= bag.size()) {  //防呆
+            Item item = bag.get(choose - 1);
+            bag.remove(choose - 1);
+        }
+    }
 
     public boolean use(int choose) {////使用背包東西(順便把背包裡的那個刪掉) + 回傳布林值判斷使用成功與否
         boolean isOk = false;
@@ -116,8 +123,9 @@ public class Player extends Character {
                 System.out.println(item.getUseage());
                 bag.remove(choose - 1);
                 isOk = true;
-            } else if (item.getBuffTime() > 0 && isFighting) { //判斷是否為戰鬥中使用的buff道具
+            } else if (item.getBuffTime() > 0 && isFighting ) { //判斷是否為戰鬥中使用的buff道具
                 buffList.add(item);
+                getAbility().merge(item.ability);
                 System.out.println("成功使用");
                 System.out.println(item.getUseage());
                 bag.remove(choose - 1);
@@ -130,17 +138,13 @@ public class Player extends Character {
                 isOk = true;
             } else if (item.isArmor()) {
                 takeOffArmor(1);  //目前只有一格裝備，所以暫時先1之後再改
-                boolean tmp = wearArmor((Armor) item); //穿裝
-                if(tmp){
-                    bag.remove(item);
-                }
+                wearArmor((Armor) item); //穿裝
+                bag.remove(item);
                 isOk = true;
             } else if (item.isWeapon()) {
                 takeOffWeapon(1);
-                boolean tmp = wearWeapon((Weapon) item);
-                if(tmp){
-                    bag.remove(item);
-                }
+                wearWeapon((Weapon) item);
+                bag.remove(item);
                 isOk = true;
             }
         }
@@ -153,11 +157,13 @@ public class Player extends Character {
                 if (item.getAgainstAnimalOrDemon() == monster.getKind()) {  //判斷對何種怪物生效
                     getAbility().merge(item.ability);
                 }
-            } else {
-                getAbility().merge(item.ability);
             }
+            // } else if(item.getBuffTime()== item.getOriginalBuffTime()){
+            //     getAbility().merge(item.ability);
+            // }
         }
     }
+
 
     public void buffCountDown() {  //buff倒數 (不管永久性buff)
         for (int i = 0; i < buffList.size(); i++) {
@@ -174,13 +180,17 @@ public class Player extends Character {
     public void removeBuff() {
         for (int i = 0; i < buffList.size(); i++) {
             if (!buffList.get(i).isPermanentBuff()) {
+//                printAll();//測試用
                 getAbility().unMerge(buffList.get(i).ability);  //復原狀態
+//                System.out.println(buffList.toString()+"測試用removebuff");//測試用
                 buffList.remove(buffList.get(i--)); //至buff列表移除
+//                printAll();//測試用
             } else {
                 getAbility().unMerge(buffList.get(i).ability); //永久性buff只會復原狀態不移除
             }
         }
     }
+
 
     public void supply() {
         for (int i = 0; i < bag.size(); i++) {
@@ -239,17 +249,11 @@ public class Player extends Character {
         printState();
         printEquipment();
     }
-    public void removeBag(int choose) {
-        if (choose <= bag.size()) {  //防呆
-            Item item = bag.get(choose - 1);
-            bag.remove(choose - 1);
-        }
-    }
 
     @Override
     public String toString() {
         return "名字: " + getAbility().getName() + "\n" + "等級: " + getAbility().getLV() + "   " +
                 "經驗值(當前/最大):" + getAbility().getExp() + "/" + getAbility().getMaxExp() + "\n" +
-                getAbility();
+                getAbility()+"錢包:"+getAbility().getMoney();
     }
 }
