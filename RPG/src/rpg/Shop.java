@@ -80,12 +80,16 @@ public class Shop {
             player.supply();
             System.out.println("請輸入販賣商品編號");
             int sellNum=sc.nextInt();
-            System.out.println("販賣成功");
-            Item sellItem=new Item();
-            sellItem=player.getBag().get(sellNum-1);
-            player.ability.setMoney(player.ability.getMoney()+sellItem.getPrice());
-            System.out.println("錢包:"+player.getAbility().getMoney());
-            player.removeBag(sellNum);
+            if (sellNum <= 0 || sellNum > player.getBag().size()) {
+                System.out.println("輸入錯誤");
+            }else {
+                System.out.println("販賣成功");
+                Item sellItem = new Item();
+                sellItem=player.getBag().get(sellNum-1);
+                player.ability.setMoney(player.ability.getMoney()+sellItem.getPrice());
+                System.out.println("錢包:"+player.getAbility().getMoney());
+                player.removeBag(sellNum);
+            }
         }else{
             System.out.println("背包內無可販賣商品");
         }

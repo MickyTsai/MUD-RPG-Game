@@ -496,6 +496,8 @@ public class Rpg {
     public static int Random (int min, int max){
         return (int)(Math.random() * (max - min + 1) + min);
     }
+
+    //選擇武器
     public static Weapon chooseWeapon(){
         //選擇起始武器（調用初始武器的ArrayList)
         Scanner sc = new Scanner(System.in);
@@ -538,7 +540,9 @@ public class Rpg {
             }
         }
         
-    } //選擇武器
+    }
+
+    //選擇防具
     public static Armor chooseArmor(){
         //選擇起始防具（調用初始防具的ArrayList)
         Scanner sc = new Scanner(System.in);
@@ -581,7 +585,7 @@ public class Rpg {
             }
         }
         
-    } //選擇防具
+    }
 
     //遇到怪物 每回合可以選擇
     public static void chooseOnFight (Player newPlayer, Monster animal, Fight fight) throws InterruptedException{
