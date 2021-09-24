@@ -130,13 +130,17 @@ public class Player extends Character {
                 isOk = true;
             } else if (item.isArmor()) {
                 takeOffArmor(1);  //目前只有一格裝備，所以暫時先1之後再改
-                wearArmor((Armor) item); //穿裝
-                bag.remove(item);
+                boolean tmp = wearArmor((Armor) item); //穿裝
+                if(tmp){
+                    bag.remove(item);
+                }
                 isOk = true;
             } else if (item.isWeapon()) {
                 takeOffWeapon(1);
-                wearWeapon((Weapon) item);
-                bag.remove(item);
+                boolean tmp = wearWeapon((Weapon) item);
+                if(tmp){
+                    bag.remove(item);
+                }
                 isOk = true;
             }
         }
